@@ -1,6 +1,17 @@
 ---
 layout: main
 ---
+<!-- script pointing to jekyll-search.js -->
+<script src="{{ site.baseurl }}/assets/js/simple-jekyll-search.js"></script>
+
+<script type="text/javascript">
+  var sjs = SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '/search.json'
+})
+</script>
+<!-- end script pointing to jekyll-search.js -->
 {% for post in paginator.posts %}
 <article class="post">
   {% if post.img %}
