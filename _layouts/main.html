@@ -18,6 +18,20 @@ layout: default
       <div class="author-name">{{site.author}}</div>
       <p>{{site.about-author}}</p>
     </div>
+    <div>
+      <div class="sidebar-nav-item">Category</div>
+      <!-- <nav class="content-ul"> -->
+        {% for category in site.categories %}
+        <a href="{{ root_url }}/{{ site.category_dir }}#{{ category | first }}"
+           class="categories-list-item">
+                              <span class="name">
+                                  {{ category | first }}
+                              </span>
+          <span class="my-badge">{{ category | last | size }}</span>
+        </a>
+        {% endfor %}
+      <!-- </nav> -->
+    </div>
   </header> <!-- End Header -->
   <footer>
     <section class="contact">
@@ -27,9 +41,11 @@ layout: default
         <input type="text" id="search-input" placeholder="Search blog posts..">
         <ul id="results-container"></ul>
         -->
-        <a id="search" class="dosearch">
-            <svg class="icon-search"><use xlink:href="#icon-search"></use></svg>
-        </a>        
+        <li>
+            <a id="search" class="dosearch">
+              <svg class="icon-search" style="margin-bottom: -1px;"><use xlink:href="#icon-search"></use></svg>
+            </a>
+        </li>
         <!-- {% if site.social-twitter %}
           <li><a href="https://twitter.com/{{ site.social-twitter }}" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
         {% else %}
