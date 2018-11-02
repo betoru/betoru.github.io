@@ -22,7 +22,8 @@ layout: default
       <div class="sidebar-nav-item">Category</div>
       <!-- <nav class="content-ul"> -->
         {% for category in site.categories %}
-        <a href="{{ root_url }}/{{ site.category_dir }}#{{ category | first }}"
+        <!-- <a href="{{ root_url }}/category#{{ category | first }}" onclick="location.hash='{{ category | first }}';location.reload()"> -->
+        <a href="{{ root_url }}/{{ site.category_dir }}#{{ category | first }}" onclick="location.reload()"
            class="categories-list-item">
                               <span class="name">
                                   {{ category | first }}
