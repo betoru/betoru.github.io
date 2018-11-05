@@ -1608,12 +1608,13 @@ a.newer-posts:hover {
 	/* border-bottom:1px solid #ddd; */
   text-decoration:none;
   color: black;
-  font-size: 10pt;
+  font-size: 12pt;
   text-transform: uppercase;
 	transition:0.4s ease;
 	-webkit-transition:0.4s ease;
 	-moz-transition:0.4s ease;
 	-o-transition:0.4s ease;
+  margin: 0 0 6px;
 }
 .category-list:last-of-type{
 	border-bottom:none;

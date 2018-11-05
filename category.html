@@ -12,10 +12,11 @@ permalink: /category
   <hr>
   <ul>
     <li v-for="p in posts" v-if="p.categories.indexOf(hash) != -1">
-      <time>
-        {{ esc_date }}
-      </time>
-      <a v-bind:href="p.url" class="category-list">{{ esc_title }}</a>
+      <a v-bind:href="p.url" class="category-list">{{ esc_title }}
+        <time style="float: right;">
+          {{ esc_date }}
+        </time>
+      </a>
     </li>
   </ul>
 </div>
