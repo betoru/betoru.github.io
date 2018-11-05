@@ -1179,6 +1179,7 @@ a.older-posts, a.newer-posts {
   -o-transition: transform .2s;
   transition: transform .2s;
   transition: transform .2s, -webkit-transform .2s;
+  text-decoration:none;
 }
 
 a.older-posts:hover {
