@@ -22,8 +22,8 @@ layout: default
       <div class="sidebar-nav-item">Category</div>
       <!-- <nav class="content-ul"> -->
         {% for category in site.categories %}
-        <!-- <a href="{{ root_url }}/category#{{ category | first }}" onclick="location.hash='{{ category | first }}';location.reload()"> -->
-        <a href="/{{ site.category_dir }}#{{ category | first }}" onclick="location.reload()"
+        <!-- <a href="{{ root_url }}/category#{{ category | first }}" onclick="location.hash='{{ category | first }}';location.reload()" -->
+        <a href="/category#{{ category[0] }}" onclick="location.hash='{{ category[0] }}';location.reload()"
            class="categories-list-item">
                               <span class="name">
                                   {{ category | first }}
@@ -82,6 +82,26 @@ layout: default
 <div class="content-box clearfix">
   {{ content }}
 </div>
+
+<script>
+  var hash = decodeURI(window.location.hash.substr(1));
+
+  var postList = new Vue({
+    el: '#post-list',
+    data: {
+      posts: []
+    }
+  });
+
+  axios.get('/posts.json')
+  .then(function (response) {
+    postList.posts = response.data.posts;
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+</script>
+
 <!-- script pointing to jekyll-search.js -->
 <script src="{{ site.baseurl }}/assets/js/simple-jekyll-search.js"></script>
 

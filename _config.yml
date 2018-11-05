@@ -1,5 +1,5 @@
 title: Hello, I'm Betoru :D
-category_dir: category
+# category_dir: category
 # tag_dir: tag/
 description: > # this means to ignore newlines until "baseurl:"
   Write an awesome description for your new site here. You can edit this
