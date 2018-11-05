@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 {% include head.html %}
@@ -7,29 +6,6 @@
     {% include sidebar.html %}
     {{ content }}
   </div>
-  <script>
-    var hash = decodeURI(window.location.hash.substr(1));
-
-    var postList = new Vue({
-      el: '#post-list',
-      data: {
-        posts: []
-      }
-    });
-
-    axios.get('/posts.json')
-    .then(function (response) {
-      postList.posts = response.data.posts;
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  </script>
-
-  <!-- script pointing to jekyll-search.js -->
-  <script src="{{ site.baseurl }}/assets/js/simple-jekyll-search.js"></script>
-  <!-- end script pointing to jekyll-search.js -->
-  <script src="{{ "/assets/js/main.js" | prepend: site.baseurl }}"></script>
   {% include analytics.html %}
 </body>
 </html>
