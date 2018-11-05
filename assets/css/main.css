@@ -1535,7 +1535,7 @@ a.newer-posts:hover {
 @media only screen and (min-width:37.5rem){.search-form .search-list .entry-date{display:inline}
 }
 .search-form .search-list .entry-category{text-transform:uppercase;background-color:#a9383d;margin-right:.313rem;height:1.25rem;border-radius:.625rem;font-size:.75rem;padding:.125rem .5rem;color:#fff}
-.search-form .search-list a{color:#fff;text-decoration:none;display:block;padding:.938rem 0;width:100%;border-bottom:1px solid #333;-webkit-transition:all .3s;transition:all .3s;line-height:1.563rem;}
+.search-form .search-list a{color:#fff;text-decoration:none;display:block;padding:.938rem 0;width:100%;-webkit-transition:all .3s;transition:all .3s;line-height:1.563rem;}
 .search-form .search-list a:hover{color:#efff00;}
 .search-form .search-list a:hover .entry-category{color:#fff}
 .search-form .icon-remove-sign{position:absolute;top:0;right:0;display:block;width:1.625rem;height:1.625rem;padding:.313rem;fill:#fff;background-color:#a9383d;border-radius:13px;margin:.438rem;cursor:pointer;outline:0;z-index:1}
