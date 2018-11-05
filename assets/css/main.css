@@ -1623,3 +1623,14 @@ a.newer-posts:hover {
 	background-color: rgba(0,0,10,0.075);
 	color: #983;
 }
+.toc{border: 1px solid #607D8B;}
+.toc a{
+  display: block;
+  text-decoration:none;
+  color: black;
+  font-size: 11pt;
+  transition:0.4s ease;
+  -webkit-transition:0.4s ease;
+  -moz-transition:0.4s ease;
+  -o-transition:0.4s ease;
+}
