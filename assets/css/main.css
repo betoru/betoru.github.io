@@ -140,9 +140,11 @@ strong {
 code,
 kbd,
 samp {
-  font-family: monospace, monospace;
+  /* font-family: monospace, monospace; */
+  font-family: Monaco,"Lucida Console",monospace;
+
   /* 1 */
-  font-size: 1em;
+  font-size: 0.8em;
   /* 2 */
 }
 
