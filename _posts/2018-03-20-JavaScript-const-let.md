@@ -9,6 +9,7 @@ tags:
   - javascript
   - const
   - let
+img: js-1.png # Add image post (optional)  
 ---
 
 * Kramdown table of contents

@@ -8,6 +8,7 @@ tags:
   - ecmascript
   - javascript
   - basic
+img: js-1.png # Add image post (optional)  
 ---
 
 * Kramdown table of contents

@@ -8,6 +8,7 @@ tags:
   - ecmascript
   - javascript
   - arguments
+img: js-1.png # Add image post (optional)  
 ---
 
 자바스크립트에는 선언부에 명시되지 않은 파라미터를 별도로 저장하는 프로퍼티가 존재한다.

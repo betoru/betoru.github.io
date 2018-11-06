@@ -8,6 +8,7 @@ tags:
   - ecmascript
   - javascript
   - callback
+img: js-1.png # Add image post (optional)  
 ---
 
 자바스크립트의 함수(function)는 하나의 완성된 객체다. 클래스에 종속적이며 클래스 없이는 접근이 불가능한 자바의 메서드(method)와는 다르다. 자바의 메서드가 단지 인스턴스화 될 클래스의 템플릿으로 존재하는 반면, 함수는 독립적인 객체로 존재하기 때문에 함수만으로 접근이 가능하고 개별선언도 가능하다.
