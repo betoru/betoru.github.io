@@ -142,7 +142,7 @@ var data = []
 var opt = {}
 
 opt.fuzzy = false
-opt.limit = 10
+opt.limit = 15
 opt.searchStrategy = opt.fuzzy ? _$FuzzySearchStrategy_5 : _$LiteralSearchStrategy_6
 opt.sort = NoSort
 
@@ -195,7 +195,7 @@ function setOptions (_opt) {
   opt = _opt || {}
 
   opt.fuzzy = _opt.fuzzy || false
-  opt.limit = _opt.limit || 10
+  opt.limit = _opt.limit || 15
   opt.searchStrategy = _opt.fuzzy ? _$FuzzySearchStrategy_5 : _$LiteralSearchStrategy_6
   opt.sort = _opt.sort || NoSort
 }
@@ -307,7 +307,7 @@ var _$src_8 = {};
       return 0
     },
     noResultsText: 'No results found',
-    limit: 10,
+    limit: 15,
     fuzzy: false,
     exclude: []
   }
