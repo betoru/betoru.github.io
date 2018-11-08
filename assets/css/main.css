@@ -1019,6 +1019,26 @@ table tfoot td {
       -ms-flex-align: stretch;
           align-items: stretch;
 }
+.content-box .container{
+  text-align: center;
+  width: 100%;
+  max-width: 100%;
+}
+.content-box .container .newer-posts{
+  padding: 20px;
+  font-size: 13px;
+}
+
+.content-box .container .older-posts{
+  padding: 20px;
+  font-size: 13px;
+}
+
+.content-box .container .page-number{
+  padding: 20px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+}
 
 .contact .contact-title {
   position: relative;
