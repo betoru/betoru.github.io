@@ -17,6 +17,7 @@ img: java.png # Add image post (optional)
 
 가변인자 `arguments`는 메서드 매개 변수의 특수한 형태로, 배열처럼 다뤄지며 배열의 길이를 메서드 호출 시점에 결정한다. 사용하려면 변수 타입 뒤에 바로 온점 세 개`...`를 붙이면 된다.
 
+
 ```java
 // 선언
 public void showArgs(int... args) {
