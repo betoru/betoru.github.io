@@ -13,24 +13,18 @@ img: java.png # Add image post (optional)
 * Kramdown table of contents
 {:toc .toc}
 
-## arguments란?
+## Decode란?
 
-가변인자 `arguments`는 메서드 매개 변수의 특수한 형태로, 배열처럼 다뤄지며 배열의 길이를 메서드 호출 시점에 결정한다. 사용하려면 변수 타입 뒤에 바로 온점 세 개`...`를 붙이면 된다.
+`Decode`란 *오라클에서만* 지원하는 함수로써 `SELECT`문 내에 비교연산을 수행해주는 함수이다.
+`DECODE`내 선언된 인자의 수에 따라 사용 방식이 다르다.
 
+함수의 사용 방식은 아래와 같다.
+```sql
+//인자의 수가 3개인 경우
 
-```java
-// 선언
-public void showArgs(int... args) {
-    System.out.println(args[0]);
-    System.out.println(args[1]);
-}
+인자 순서에 따라 A, B, C, ... Z 로 정하고 그 값을 나타냈다.
+SELECT DECODE(1,2,3) FROM DUAL
 
-
-// 호출 패턴
-showArgs();
-showArgs(null);
-showArgs(1, 2, 3, 4);
-showArgs(3);
 ```
 
 호출하는 측에선 인자를 생략하거나, 타입이 일치하는(여기선 int) 쉼표로 구분되는 하나 이상의 인자를 전달하며 호출할 수 있다. 인자를 생략할 경우 가변인자의 길이는 0이 되니 주의할 것.
