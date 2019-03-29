@@ -28,6 +28,7 @@ Decode는 선언한 인자의 개수에 따라 사용방식이 달라진다.
 */
 SELECT DECODE(A,B,C) FROM DUAL;
 ```
+
 ```sql
 /*
   인자 수 : 4개(A,B,C,D)
@@ -36,6 +37,7 @@ SELECT DECODE(A,B,C) FROM DUAL;
 */
 SELECT DECODE(A,B,C,D) FROM DUAL;
 ```
+
 ```sql
 /*
   인자 수 : 5개(A,B,C,D,E)
@@ -46,6 +48,7 @@ SELECT DECODE(A,B,C,D) FROM DUAL;
 */
 SELECT DECODE(A,B,C,D,E) FROM DUAL;
 ```
+
 ```sql
 /*
   인자 수 : 6개(A,B,C,D,E,F)
