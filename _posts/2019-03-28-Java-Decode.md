@@ -1,13 +1,16 @@
 ---
 layout: post
 date: 2019-03-28 15:47:00 +0900
-title: 'Java: Decode'
+title: 'DB: Decode(Oracle), IF(MySQL)'
 category:
-  - java
+  - database
 tags:
-  - java
+  - db
+  - database
+  - oracle
+  - mysql
   - decode
-img: java.png # Add image post (optional)
+img: database.jpg # Add image post (optional)
 ---
 
 * Kramdown table of contents
