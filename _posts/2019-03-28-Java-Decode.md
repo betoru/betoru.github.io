@@ -20,28 +20,29 @@ img: java.png # Add image post (optional)
 
 Decode는 선언한 인자의 개수에 따라 사용방식이 달라진다.
 인자 개수에 따른 사용 방식은 아래와 같다.
+
+인자 수 : 3개(A,B,C)
 ```sql
 /*
-  인자 수 : 3개(A,B,C)
   A와 B가 같다면 결과는 C
   A와 B가 다르면 결과는 null
 */
 SELECT DECODE(A,B,C) FROM DUAL;
 ```
 
+인자 수 : 4개(A,B,C,D)
 ```sql
-/*
-  인자 수 : 4개(A,B,C,D)
+/*  
   A와 B가 같다면 결과는 C
   A와 B가 다르면 결과는 D
 */
 SELECT DECODE(A,B,C,D) FROM DUAL;
 ```
 
+인자 수 : 5개(A,B,C,D,E)
+5개부터 인자비교가 달라짐 A-B, A-D
 ```sql
 /*
-  인자 수 : 5개(A,B,C,D,E)
-  5개부터 인자비교가 달라짐 A-B, A-D
   A와 B가 같다면 결과는 C
   A와 D가 같다면 결과는 E
   둘다 아니면 null
@@ -49,10 +50,10 @@ SELECT DECODE(A,B,C,D) FROM DUAL;
 SELECT DECODE(A,B,C,D,E) FROM DUAL;
 ```
 
+인자 수 : 6개(A,B,C,D,E,F)
+5개부터 인자비교가 달라짐 A-B, A-D
 ```sql
 /*
-  인자 수 : 6개(A,B,C,D,E,F)
-  5개부터 인자비교가 달라짐 A-B, A-D
   A와 B가 같다면 결과는 C
   A와 D가 같다면 결과는 E
   둘다 아니면 F
