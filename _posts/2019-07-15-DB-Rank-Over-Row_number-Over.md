@@ -45,7 +45,7 @@ SELECT NUM, NM, RANK () OVER (ORDER BY NUM DESC) RANK
 `결과`
 
 |NUM|NM |RANK|
-| : | : | : |
+|:-:|:-:|:-:|
 |5  |a7 |	1 |
 |4  |a4 |	2 |
 |4  |a6 |	2 |
@@ -77,7 +77,7 @@ SELECT NUM, NM, ROW_NUMBER () OVER (ORDER BY NUM DESC) RANK
 `결과`
 
 |NUM|NM |RANK|
-| : | : | : |
+|:-:|:-:|:-:|
 |5  |a7 |	1 |
 |4  |a4 |	2 |
 |4  |a6 |	3 |
