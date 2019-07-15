@@ -17,28 +17,71 @@ img: database.jpg # Add image post (optional)
 * Kramdown table of contents
 {:toc .toc}
 
-## Toad란?
+## Rank Over VS Row_number Over
 
->`Tool for Oracle Application Development`의 약자로 오라클 등 DMBS 관리 및 분석에 사용되는 소프트웨어 툴이다.
+> 어떤 SCORE 에 의해 데이터를 정렬해야 할 때 이 두 가지의 함수 중 적절한 함수를 쓰도록 한다.
 
-#### 유용한 단축키
-토드를 사용하다보면 불편함을 느끼곤 한다.
-경험담을 통해 나름 유용하게 사용한 단축키를 소개하고 정리하고자 한다.
+#### Rank Over()
+기준 데이터를 정렬했을 때 동일한 값의 데이터는 동일한 정렬값을 부여하는 함수. 함수명 그대로 `RANK`
 
-1. `ctrl + insert` : 어떤 쿼리를 실행하여 그리드에 출력된 데이터를 컬럼과 함께 복사할 수 있는 단축키이다. 복사할 데이터를 드래그 하여 단축키를 입력한다. 이 단축키를 몰랐을 때 컬럼을 따로 복사하고 데이터를 맞춰서 정렬하여 정리하고 업무를 진행했다. 단축키 사용 후 작업에 소요되는 시간을 상당히 단축했다.
+```
+예
+SELECT NUM, NM, RANK () OVER (ORDER BY NUM DESC) RANK
+  FROM (SELECT 1 AS NUM, 'a1' NM FROM DUAL
+        UNION ALL
+        SELECT 2 AS NUM, 'a2' NM FROM DUAL
+        UNION ALL
+        SELECT 3 AS NUM, 'a3' NM FROM DUAL
+        UNION ALL
+        SELECT 4 AS NUM, 'a4' NM FROM DUAL
+        UNION ALL
+        SELECT 4 AS NUM, 'a5' NM FROM DUAL
+        UNION ALL
+        SELECT 4 AS NUM, 'a6' NM FROM DUAL
+        UNION ALL
+        SELECT 5 AS NUM, 'a7' NM FROM DUAL)
+ WHERE 1 = 1;
+```
+`결과`
 
-2. `ctrl + .` : 테이블명을 자동 완성해주는 단축키다. 테이블명을 작성하는 중간에 커서를 두고 키를 입력하면 리스트가 다운된다. 사용계정과 테이블 Owner가 다르면 검색이 안된다거나 권한이 없는 테이블이 검색되는 단점이 있다. `ALL_TABLES` 를 함께 활용해서 본인만의 노하우가 필요할 듯.
+|NUM|NM |RANK|
+| : | : | : |
+|5  |a7 |	1 |
+|4  |a4 |	2 |
+|4  |a6 |	2 |
+|4  |a5 |	2 |
+|3  |a3 |	5 |
+|2  |a2 |	6 |
+|1  |a1 |	7 |
 
-3. `ctrl + T` : 대상 테이블의 컬럼 조회 단축키. 테이블의 조건을 걸거나 컬럼명이 필요할 때 `F4`를 눌러 확인했으나 새 윈도우 로딩시간이 있어 불편했다. 코멘트까지는 나오지 않는다. 코멘트가 나오게 할 수 있으려나? 그럼 너무 길겠지..
+#### Row_number Over()
+기준 데이터를 정렬했을 때 동일한 값의 데이터와 상관없이 기준 데이터값을 정렬하여 순차적으로 정렬값을 부여한 함수
+```
+SELECT NUM, NM, ROW_NUMBER () OVER (ORDER BY NUM DESC) RANK
+  FROM (SELECT 1 AS NUM, 'a1' NM FROM DUAL
+        UNION ALL
+        SELECT 2 AS NUM, 'a2' NM FROM DUAL
+        UNION ALL
+        SELECT 3 AS NUM, 'a3' NM FROM DUAL
+        UNION ALL
+        SELECT 4 AS NUM, 'a4' NM FROM DUAL
+        UNION ALL
+        SELECT 4 AS NUM, 'a5' NM FROM DUAL
+        UNION ALL
+        SELECT 4 AS NUM, 'a6' NM FROM DUAL
+        UNION ALL
+        SELECT 5 AS NUM, 'a7' NM FROM DUAL)
+ WHERE 1 = 1;
 
-4. `ctrl + B` : 블럭 주석. 너무 유명한 단축키지... 주석 단축키
+```
+`결과`
 
-5. `ctrl + shift + B` : 주석 해제. 이 또한 유명한 단축키
-
-6. `ctrl + shift + F` : SQL Statement 를 설정된 Formatting 으로 정렬해준다.
-
-7. `ctrl + U` : UpperCase 즉, 대문자로 변환
-
-8. `ctrl + L` : LowerCase 즉, 소문자로 변환
-
-9. `ctrl + E` : 실행계획. 작성된 쿼리가 Full scan 을 하는지 튜닝이 필요한지 파악할 수 있다.
+|NUM|NM |RANK|
+| : | : | : |
+|5  |a7 |	1 |
+|4  |a4 |	2 |
+|4  |a6 |	3 |
+|4  |a5 |	4 |
+|3  |a3 |	5 |
+|2  |a2 |	6 |
+|1  |a1 |	7 |
