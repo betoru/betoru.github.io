@@ -15,13 +15,12 @@ img: js-1.png # Add image post (optional)
 * Kramdown table of contents
 {:toc .toc}
 
-## lazyload
-
-> 웹페이지를 호출 할 때, 모든 이미지를 로드하지 않고 사용자가 보는 화면의 이미지부터 순차적으로 로드하여 화면을 빠르게 호출한다.
-
 #### 참고한 글
 - [https://appelsiini.net/projects/lazyload/](https://appelsiini.net/projects/lazyload/)
 
+## lazyload
+
+> 웹페이지를 호출 할 때, 모든 이미지를 로드하지 않고 사용자가 보는 화면의 이미지부터 순차적으로 로드하여 화면을 빠르게 호출한다.
 
 ```html
 <html>
@@ -54,8 +53,8 @@ img: js-1.png # Add image post (optional)
 </body>
 </html>
 ```
-```html
 
+### description
 1. lazyload() -> 7번째 줄
 $('img.gocoder').lazyload()
 - 해당 기능을 호출합니다. 이렇게만 쓰셔도 옵션 없이 정상 작동합니다.
