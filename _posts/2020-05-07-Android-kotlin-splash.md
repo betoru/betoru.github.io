@@ -8,7 +8,7 @@ tags:
   - Kotlin
   - android
   - splash
-img: Kotlin.png # Add image post (optional)  
+img: kotlin.png # Add image post (optional)  
 ---
 
 ## Splash
