@@ -52,9 +52,9 @@ splash는 앱 실행시 노출되므로 adroidmanifest 의 LAUNCHER를 설정해
 
 </manifest>
 ```
-
 #### SplashActivity.kt
-스플래시 코틀린 클래스 : 앱이 실행되면 코틀린 클래스가 실행되며, 딜레이 시간을 설정하여 끝났을 때 MainActivity가 실행되도록 한다.
+앱이 실행되면 AndroidManifest 설정대로 스플래시가 실행되고 설정된 딜레이가 소요되면 MainActivity가 실행되도록 한다.
+그 사이 api 통신을 하여 필요한 데이터 및 버전 체크를 진행한다.
 
 ```javascript
 class SplashActivity : AppCompatActivity() {
@@ -63,6 +63,44 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        /**
+         * 앱 실행시, api 통신
+         */
+        var retrofit = Retrofit.Builder()
+            .baseUrl("http://192.168.0.101:9090")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        //field 변수 임의설정
+        val a = "a"
+        var splashService = retrofit.create(ApiService::class.java)
+
+        splashService.requestApi(a).enqueue(object : Callback<ApiOutPut> {
+            override fun onFailure(call: Call<ApiOutPut>, t: Throwable) {
+
+                Log.d("DEBUG", t.message)
+                //웹 통신에 실패했을 때 실행되는 코드
+
+                var dialog = AlertDialog.Builder(this@SplashActivity)
+                dialog.setTitle("실패")
+                dialog.setMessage("통신에 실패했습니다.")
+                dialog.show()
+            }
+
+            override fun onResponse(call: Call<ApiOutPut>, response: Response<ApiOutPut>) {
+                //웹 통신에 성공 , 응답값을 받아온다
+
+                var code = response.body() // resultCode, resultMessage, resultData
+
+                var dialog = AlertDialog.Builder(this@SplashActivity)
+                dialog.setTitle("알람")
+                dialog.setMessage("resultCode = "+ code?.resultCode + ", resultMessage = " + code?.resultMessage + ", resultData = " + code?.resultData)
+                dialog.show()
+            }
+
+        })
+
 
         //setting start activity after delay
         Handler().postDelayed({
