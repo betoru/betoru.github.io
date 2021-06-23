@@ -1,0 +1,72 @@
+I"�!<ul class="toc" id="markdown-toc">
+  <li><a href="#참고한-글" id="markdown-toc-참고한-글">참고한 글</a></li>
+  <li><a href="#생성자-함수가-일반-함수로-호출되는것을-방지하는-방법" id="markdown-toc-생성자-함수가-일반-함수로-호출되는것을-방지하는-방법">생성자 함수가 일반 함수로 호출되는것을 방지하는 방법</a></li>
+  <li><a href="#생성자의-메서드" id="markdown-toc-생성자의-메서드">생성자’의’ 메서드</a></li>
+  <li><a href="#생성자-메서드" id="markdown-toc-생성자-메서드">생성자 메서드</a></li>
+</ul>
+
+<h4 id="참고한-글">참고한 글</h4>
+<ul>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/constructor">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/constructor</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new</a></li>
+  <li><a href="http://tobyho.com/2010/11/22/javascript-constructors-and/">http://tobyho.com/2010/11/22/javascript-constructors-and/</a></li>
+</ul>
+
+<p><img src="/images/prototype-constructor-1.png" alt="" /></p>
+
+<h2 id="생성자-함수가-일반-함수로-호출되는것을-방지하는-방법">생성자 함수가 일반 함수로 호출되는것을 방지하는 방법</h2>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Person</span><span class="p">(</span><span class="nx">name</span><span class="p">){</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="k">this</span> <span class="k">instanceof</span> <span class="nx">Person</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">bob</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">'</span><span class="s1">bob</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">bob2</span> <span class="o">=</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">'</span><span class="s1">bob</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">bob</span> <span class="k">instanceof</span> <span class="nx">Person</span><span class="p">;</span> <span class="c1">// true</span>
+<span class="nx">bob2</span> <span class="k">instanceof</span> <span class="nx">Person</span><span class="p">;</span> <span class="c1">// true</span>
+</code></pre></div></div>
+<p><code class="language-plaintext highlighter-rouge">new Object()</code>와 <code class="language-plaintext highlighter-rouge">Object()</code>의 결과가 같은 이유는 Object 함수가 위처럼 되어 있기 때문이다. 생성자 함수가 new 키워드 없이 일반 함수로써 호출되면 <code class="language-plaintext highlighter-rouge">this</code>는 생성자 함수의 프로토타입이 아니라 함수를 소유하고있는 객체가 된다. (실행기가 브라우저라면 <code class="language-plaintext highlighter-rouge">this</code>는 Window다.)</p>
+
+<h2 id="생성자의-메서드">생성자’의’ 메서드</h2>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Person</span><span class="p">(</span><span class="nx">name</span><span class="p">){</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">sayHi</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="dl">'</span><span class="s1">Hi, I am </span><span class="dl">'</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>위의 코드는 다음처럼 작성하는게 좋다:</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Person</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">sayHi</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="dl">'</span><span class="s1">Hi, I am </span><span class="dl">'</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+<p>왜냐하면 첫 번째 코드는 생성되는 인스턴스 개수만큼 <code class="language-plaintext highlighter-rouge">sayHi()</code> 메서드가 생성되지만 두 번째 코드는 프로토타입의 메서드로 딱 한 번만 생성되고 Person의 인스턴스들은 이 프로토타입의 메서드를 공유하기 때문이다. 즉, 불필요한 함수 생성으로 메모리가 낭비되는걸 방지 할 수 있다.</p>
+
+<h2 id="생성자-메서드">생성자 메서드</h2>
+<p>생성자 메서드(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/constructor">constructor method</a>)는 ES2015(ES6)에 추가된 class 구문 내에서 사용한다. <strong>생성자 함수가 아니다.</strong></p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">Square</span> <span class="kd">extends</span> <span class="nx">Polygon</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Here, it calls the parent class' constructor with lengths</span>
+    <span class="c1">// provided for the Polygon's width and height</span>
+    <span class="k">super</span><span class="p">(</span><span class="nx">length</span><span class="p">,</span> <span class="nx">length</span><span class="p">);</span>
+    <span class="c1">// Note: In derived classes, super() must be called before you</span>
+    <span class="c1">// can use 'this'. Leaving this out will cause a reference error.</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Square</span><span class="dl">'</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kd">get</span> <span class="nx">area</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">height</span> <span class="o">*</span> <span class="k">this</span><span class="p">.</span><span class="nx">width</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kd">set</span> <span class="nx">area</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">area</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+:ET

@@ -1,0 +1,100 @@
+I"�-<h2 id="splash">Splash</h2>
+<blockquote>
+  <p>App 을 실행하여 처음 보여주는 인트로 화면, 주로 데이터를 로드하는 시간동안 노출하며 앱 버전, 업데이트 여부 등을 체크하는 동안 노출한다.</p>
+</blockquote>
+
+<h4 id="androidmanifestxml">AndroidManifest.xml</h4>
+<p>splash는 앱 실행시 노출되므로 adroidmanifest 의 LAUNCHER를 설정해준다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;manifest</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
+    <span class="na">xmlns:tools=</span><span class="s">"http://schemas.android.com/tools"</span>
+    <span class="na">package=</span><span class="s">"com.first.eplatztesttmpl"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">"android.permission.INTERNET"</span> <span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;application</span>
+        <span class="na">android:allowBackup=</span><span class="s">"true"</span>
+        <span class="na">android:icon=</span><span class="s">"@mipmap/ic_launcher"</span>
+        <span class="na">android:label=</span><span class="s">"@string/app_name"</span>
+        <span class="na">android:roundIcon=</span><span class="s">"@mipmap/ic_launcher_round"</span>
+        <span class="na">android:supportsRtl=</span><span class="s">"true"</span>
+        <span class="na">android:debuggable=</span><span class="s">"true"</span>
+        <span class="na">android:theme=</span><span class="s">"@style/AppTheme"</span>
+        <span class="na">tools:ignore=</span><span class="s">"HardcodedDebugMode"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;activity</span> <span class="na">android:name=</span><span class="s">".CalendarViewActivity"</span><span class="nt">&gt;&lt;/activity&gt;</span>
+        <span class="c">&lt;!-- Splash Activity --&gt;</span>
+        <span class="nt">&lt;activity</span>
+            <span class="na">android:name=</span><span class="s">".SplashActivity"</span>
+            <span class="na">android:theme=</span><span class="s">"@style/SplashTheme"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;intent-filter&gt;</span>
+                <span class="nt">&lt;action</span> <span class="na">android:name=</span><span class="s">"android.intent.action.MAIN"</span> <span class="nt">/&gt;</span>
+
+                <span class="nt">&lt;category</span> <span class="na">android:name=</span><span class="s">"android.intent.category.LAUNCHER"</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;/intent-filter&gt;</span>
+        <span class="nt">&lt;/activity&gt;</span> <span class="c">&lt;!-- Splash Activity --&gt;</span>
+        <span class="nt">&lt;activity</span>
+            <span class="na">android:name=</span><span class="s">".MainActivity"</span>
+            <span class="na">android:theme=</span><span class="s">"@style/AppTheme.NoActionBar"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/application&gt;</span>
+
+<span class="nt">&lt;/manifest&gt;</span>
+</code></pre></div></div>
+<h4 id="splashactivitykt">SplashActivity.kt</h4>
+<p>앱이 실행되면 AndroidManifest 설정대로 스플래시가 실행되고 설정된 딜레이가 소요되면 MainActivity가 실행되도록 한다.
+그 사이 api 통신을 하여 필요한 데이터 및 버전 체크를 진행한다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">SplashActivity</span> <span class="p">:</span> <span class="nx">AppCompatActivity</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="nx">val</span> <span class="nx">SPLASH_VIEW_TIME</span> <span class="p">:</span> <span class="nx">Long</span> <span class="o">=</span> <span class="mi">3000</span> <span class="c1">// 3초간 스플래시 화면 노출(ms)</span>
+
+    <span class="nx">override</span> <span class="nx">fun</span> <span class="nx">onCreate</span><span class="p">(</span><span class="nx">savedInstanceState</span><span class="p">:</span> <span class="nx">Bundle</span><span class="p">?)</span> <span class="p">{</span>
+        <span class="k">super</span><span class="p">.</span><span class="nx">onCreate</span><span class="p">(</span><span class="nx">savedInstanceState</span><span class="p">)</span>
+
+        <span class="cm">/**
+         * 앱 실행시, api 통신
+         */</span>
+        <span class="kd">var</span> <span class="nx">retrofit</span> <span class="o">=</span> <span class="nx">Retrofit</span><span class="p">.</span><span class="nx">Builder</span><span class="p">()</span>
+            <span class="p">.</span><span class="nx">baseUrl</span><span class="p">(</span><span class="dl">"</span><span class="s2">http://192.168.0.101:9090</span><span class="dl">"</span><span class="p">)</span>
+            <span class="p">.</span><span class="nx">addConverterFactory</span><span class="p">(</span><span class="nx">GsonConverterFactory</span><span class="p">.</span><span class="nx">create</span><span class="p">())</span>
+            <span class="p">.</span><span class="nx">build</span><span class="p">()</span>
+
+        <span class="c1">//field 변수 임의설정</span>
+        <span class="nx">val</span> <span class="nx">a</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">a</span><span class="dl">"</span>
+        <span class="kd">var</span> <span class="nx">splashService</span> <span class="o">=</span> <span class="nx">retrofit</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">ApiService</span><span class="p">::</span><span class="kd">class</span><span class="p">.</span><span class="nx">java</span><span class="p">)</span>
+
+        <span class="nx">splashService</span><span class="p">.</span><span class="nx">requestApi</span><span class="p">(</span><span class="nx">a</span><span class="p">).</span><span class="nx">enqueue</span><span class="p">(</span><span class="nx">object</span> <span class="p">:</span> <span class="nx">Callback</span><span class="o">&lt;</span><span class="nx">ApiOutPut</span><span class="o">&gt;</span> <span class="p">{</span>
+            <span class="nx">override</span> <span class="nx">fun</span> <span class="nx">onFailure</span><span class="p">(</span><span class="na">call</span><span class="p">:</span> <span class="nx">Call</span><span class="o">&lt;</span><span class="nx">ApiOutPut</span><span class="o">&gt;</span><span class="p">,</span> <span class="na">t</span><span class="p">:</span> <span class="nx">Throwable</span><span class="p">)</span> <span class="p">{</span>
+
+                <span class="nx">Log</span><span class="p">.</span><span class="nx">d</span><span class="p">(</span><span class="dl">"</span><span class="s2">DEBUG</span><span class="dl">"</span><span class="p">,</span> <span class="nx">t</span><span class="p">.</span><span class="nx">message</span><span class="p">)</span>
+                <span class="c1">//웹 통신에 실패했을 때 실행되는 코드</span>
+
+                <span class="kd">var</span> <span class="nx">dialog</span> <span class="o">=</span> <span class="nx">AlertDialog</span><span class="p">.</span><span class="nx">Builder</span><span class="p">(</span><span class="k">this</span><span class="p">@</span><span class="nd">SplashActivity</span><span class="p">)</span>
+                <span class="nx">dialog</span><span class="p">.</span><span class="nx">setTitle</span><span class="p">(</span><span class="dl">"</span><span class="s2">실패</span><span class="dl">"</span><span class="p">)</span>
+                <span class="nx">dialog</span><span class="p">.</span><span class="nx">setMessage</span><span class="p">(</span><span class="dl">"</span><span class="s2">통신에 실패했습니다.</span><span class="dl">"</span><span class="p">)</span>
+                <span class="nx">dialog</span><span class="p">.</span><span class="nx">show</span><span class="p">()</span>
+            <span class="p">}</span>
+
+            <span class="nx">override</span> <span class="nx">fun</span> <span class="nx">onResponse</span><span class="p">(</span><span class="na">call</span><span class="p">:</span> <span class="nx">Call</span><span class="o">&lt;</span><span class="nx">ApiOutPut</span><span class="o">&gt;</span><span class="p">,</span> <span class="na">response</span><span class="p">:</span> <span class="nx">Response</span><span class="o">&lt;</span><span class="nx">ApiOutPut</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{</span>
+                <span class="c1">//웹 통신에 성공 , 응답값을 받아온다</span>
+
+                <span class="kd">var</span> <span class="nx">code</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">body</span><span class="p">()</span> <span class="c1">// resultCode, resultMessage, resultData</span>
+
+                <span class="kd">var</span> <span class="nx">dialog</span> <span class="o">=</span> <span class="nx">AlertDialog</span><span class="p">.</span><span class="nx">Builder</span><span class="p">(</span><span class="k">this</span><span class="p">@</span><span class="nd">SplashActivity</span><span class="p">)</span>
+                <span class="nx">dialog</span><span class="p">.</span><span class="nx">setTitle</span><span class="p">(</span><span class="dl">"</span><span class="s2">알람</span><span class="dl">"</span><span class="p">)</span>
+                <span class="nx">dialog</span><span class="p">.</span><span class="nx">setMessage</span><span class="p">(</span><span class="dl">"</span><span class="s2">resultCode = </span><span class="dl">"</span><span class="o">+</span> <span class="nx">code</span><span class="p">?.</span><span class="nx">resultCode</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">, resultMessage = </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">code</span><span class="p">?.</span><span class="nx">resultMessage</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">, resultData = </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">code</span><span class="p">?.</span><span class="nx">resultData</span><span class="p">)</span>
+                <span class="nx">dialog</span><span class="p">.</span><span class="nx">show</span><span class="p">()</span>
+            <span class="p">}</span>
+
+        <span class="p">})</span>
+
+
+        <span class="c1">//setting start activity after delay</span>
+        <span class="nx">Handler</span><span class="p">().</span><span class="nx">postDelayed</span><span class="p">({</span>
+            <span class="nx">startActivity</span><span class="p">(</span><span class="nx">Intent</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="na">MainActivity</span><span class="p">::</span><span class="kd">class</span><span class="p">.</span><span class="nx">java</span><span class="p">))</span>
+        <span class="p">},</span><span class="nx">SPLASH_VIEW_TIME</span><span class="p">)</span>
+
+        <span class="nx">setContentView</span><span class="p">(</span><span class="nx">R</span><span class="p">.</span><span class="nx">layout</span><span class="p">.</span><span class="nx">activity_main</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+:ET

@@ -1,0 +1,220 @@
+I"�^<ul class="toc" id="markdown-toc">
+  <li><a href="#try-catch" id="markdown-toc-try-catch">try-catch</a></li>
+  <li><a href="#throw--throws" id="markdown-toc-throw--throws">throw / throws</a></li>
+  <li><a href="#finally" id="markdown-toc-finally">finally</a></li>
+  <li><a href="#example" id="markdown-toc-example">example</a></li>
+</ul>
+
+<p>Exception이란 런타임에서 발생하는 일종의 의도적으로 만들어낸 에러라고 볼 수 있다. (사용자 정의 에러)</p>
+
+<p>참고: <a href="https://stackoverflow.com/questions/912334/differences-between-exception-and-error">differences-between-exception-and-error</a></p>
+
+<p>API(JDK 혹은 써드파티의 메서드들)에 따라 예외를 내부에서 알아서 처리하거나 사용자에게 미루기도 하는데, API에서 예외를 미루는 경우 사용자 측에서 반드시 예외처리(<code class="language-plaintext highlighter-rouge">try-catch</code> 혹은 <code class="language-plaintext highlighter-rouge">throws</code>)를 명시해야 한다.</p>
+
+<p>예외를 미루는 대표적인 API로는:</p>
+
+<ul>
+  <li>네트워크 통신</li>
+  <li>데이터베이스 처리</li>
+  <li>메모리 &amp; 파일 입출력</li>
+</ul>
+
+<p>가 있다.</p>
+
+<h2 id="try-catch">try-catch</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>try {
+   비즈니스코드 블록
+} catch(Exception e) {
+   예외처리코드 블록, 예외 발생 시에만 실행
+} finally {
+   try, catch 뒤에 오며 예외 발생 여부와 관계없이 무조건 실행된다.
+}
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span> <span class="o">{</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="o">(</span><span class="s">"내가 만든 예외"</span><span class="o">);</span> <span class="c1">//Exception 강제 발생</span>
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">//try절에서 던진(발생한) 예외를 처리하는 블록</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span> <span class="c1">// 에러 메시지 출력</span>
+    <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span> <span class="c1">// 에러 발생 시점의 호출 스택 출력</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>ArrayIndexOutOfBoundsException의 경우 배열의 범위를 초과할 때 발생하는 예외인데 아래처럼 코드작성 시 해당 예외가 발생할 것을 예측하여 작성할 수 있다:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span><span class="o">[]</span> <span class="n">nums</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span> <span class="o">{</span><span class="mi">10</span><span class="o">,</span> <span class="mi">20</span><span class="o">,</span> <span class="mi">30</span><span class="o">,</span> <span class="mi">40</span><span class="o">,</span> <span class="mi">50</span><span class="o">};</span>
+
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">"보고싶은 인덱스 : "</span><span class="o">);</span>
+<span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="n">scan</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+
+<span class="k">try</span> <span class="o">{</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">nums</span><span class="o">[</span><span class="n">index</span><span class="o">]);</span>
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">ArrayIndexOutOfBoundsException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">);</span> <span class="c1">// 발생한 예외의 메시지를 콘솔에 출력</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"올바른 색인번호를 입력하세요."</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>모든 경우의 수를 예측하는 것은 불가능하기 때문에 비효율적이긴 해도 다음처럼 모든 예외를 처리하는 방식으로 작성하기도 한다(권장하지 않음):</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span> <span class="o">{</span>
+    <span class="c1">// ...</span>
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// 예외처리 코드</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="throw--throws">throw / throws</h2>
+
+<p><code class="language-plaintext highlighter-rouge">throw</code>, <code class="language-plaintext highlighter-rouge">throws</code> 키워드는 예외가 발생한 지역이 아니라 예외를 발생시킨 메서드를 호출한 지역, 즉 caller에서 예외를 처리하도록 할 때 사용된다. 다음은 <code class="language-plaintext highlighter-rouge">m01()</code> 메서드에서 발생한 예외를 caller인 <code class="language-plaintext highlighter-rouge">main()</code>에서 처리하는 예다:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Excep</span> <span class="n">ex</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Excep</span><span class="o">();</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">ex</span><span class="o">.</span><span class="na">m01</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"메서드를 호출한 지점"</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Excep</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">m01</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kt">int</span><span class="o">[]</span> <span class="n">nums</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span> <span class="o">{</span> <span class="mi">1</span> <span class="o">};</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">nums</span><span class="o">[</span><span class="mi">2</span><span class="o">]);</span>
+            <span class="c1">// ArrayIndexOutOfBoundsException 발생</span>
+            <span class="c1">// new ArrayIndexOutOfBoundsException(); : 1. 예외 객체 생성</span>
+            <span class="c1">// throws new ArrayIndexOutOfBoundsException : 2. 예외객체를 던진다.</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="n">e</span><span class="o">;</span> <span class="c1">// 이 메서드를 호출한 지역이 예외를 받는다</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>아래처럼 모든 메서드에서 예외를 미루는 방법도 있다:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Excep</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">m01</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+        <span class="kt">int</span><span class="o">[]</span> <span class="n">nums</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span> <span class="o">{</span><span class="mi">1</span><span class="o">};</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">nums</span><span class="o">[</span><span class="mi">2</span><span class="o">]);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="finally">finally</h2>
+
+<p><code class="language-plaintext highlighter-rouge">finally</code>는 try절이나 catch절 이후 반드시 실행되는 실행문을 정의한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">finallyTest2</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">String</span> <span class="n">str</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">str</span> <span class="o">+=</span> <span class="s">"try"</span><span class="o">;</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalAccessError</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IllegalAccessError</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">str</span> <span class="o">+=</span> <span class="s">" catch"</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+            <span class="n">str</span> <span class="o">+=</span> <span class="s">" finally"</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="nc">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="s">"try catch finally"</span><span class="o">,</span> <span class="n">str</span><span class="o">);</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">try-catch-finally</code>에서 catch절 없이 <code class="language-plaintext highlighter-rouge">try-finally</code> 형태로 작성이 가능하긴 하다. 이 경우 try절에서 예외 발생 시 예외가 미뤄진다:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">withOutCatchStatement</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="nd">@SuppressWarnings</span><span class="o">(</span><span class="s">"unused"</span><span class="o">)</span>
+                <span class="kt">int</span> <span class="n">nan</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span><span class="o">;</span> <span class="c1">// 여기서 발생한 예외는 가장 바깥의 catch에서 받음</span>
+            <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+                <span class="c1">// catch문이 없으면 finally라도 있어야 컴파일 에러 안남</span>
+                <span class="n">logger</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">"You know nothing John snow!"</span><span class="o">);</span>
+            <span class="o">}</span>            
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">ArithmeticException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">logger</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">(),</span> <span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="example">example</h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span> <span class="o">{</span>
+    <span class="kt">int</span><span class="o">[]</span> <span class="n">nums</span> <span class="o">=</span> <span class="o">{</span> <span class="mi">10</span><span class="o">,</span> <span class="mi">20</span><span class="o">,</span> <span class="mi">30</span> <span class="o">};</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">nums</span><span class="o">[</span><span class="mi">5</span><span class="o">]);</span> <span class="c1">// ArrayIndexOutOfBoundsException</span>
+
+    <span class="nc">Random</span> <span class="n">rnd</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">rnd</span><span class="o">.</span><span class="na">nextInt</span><span class="o">());</span> <span class="c1">// NullPointerException</span>
+
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">ArrayIndexOutOfBoundsException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"인덱스범위에러"</span><span class="o">);</span>
+
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">NullPointerException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"null에러"</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="c1">// 또 다른 예외 발생?</span>
+<span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// 던진 객체를 받을 수 있는 클래스가 없다면 부모 클래스인 Exception에 업캐스팅해서 받는다.</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"어쨋든 에러"</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex94</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="c1">//예외 코드</span>
+        <span class="c1">// A001 : 배송 중 제품 파손</span>
+        <span class="c1">// A002 : 배송 중 날짜 지연</span>
+        <span class="c1">// A003 : 배송 중 잘못 배송</span>
+        <span class="c1">// B001 : 사용 중 제품 불량</span>
+        <span class="c1">// B002 : 사용 중 제품 오작동</span>
+
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"고객이 제품을 주문.."</span><span class="o">);</span>
+
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"1. 주문접수 완료"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"2. 제품 포장"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"3. 제품 발송"</span><span class="o">);</span>
+
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"고객이 제품을 수령.."</span><span class="o">);</span>
+
+
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"제품파손 발견"</span><span class="o">);</span> <span class="c1">//A001</span>
+
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">MyShopException</span><span class="o">(</span><span class="s">"A001"</span><span class="o">);</span>
+
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">MyShopException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"예외 코드 : "</span> <span class="o">+</span> <span class="n">e</span><span class="o">);</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"내선 번호 : "</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">checkNumber</span><span class="o">());</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">//사용자 정의 예외 클래스(Exception 파생 클래스)</span>
+<span class="kd">class</span> <span class="nc">MyShopException</span> <span class="kd">extends</span> <span class="nc">Exception</span> <span class="o">{</span>
+    <span class="c1">//예외 코드 관리-&gt; 담당 상담원 안내</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">code</span><span class="o">;</span> <span class="c1">//예외코드</span>
+
+    <span class="nc">MyShopException</span><span class="o">(</span><span class="nc">String</span> <span class="n">code</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">code</span> <span class="o">=</span> <span class="n">code</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">//내선번호</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">checkNumber</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">String</span> <span class="n">number</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">code</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"A001"</span><span class="o">))</span> <span class="n">number</span> <span class="o">=</span> <span class="s">"100"</span><span class="o">;</span>
+        <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">code</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"A002"</span><span class="o">))</span> <span class="n">number</span> <span class="o">=</span> <span class="s">"110"</span><span class="o">;</span>
+        <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">code</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"A003"</span><span class="o">))</span> <span class="n">number</span> <span class="o">=</span> <span class="s">"120"</span><span class="o">;</span>
+        <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">code</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"B001"</span><span class="o">))</span> <span class="n">number</span> <span class="o">=</span> <span class="s">"200"</span><span class="o">;</span>
+        <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">code</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"B002"</span><span class="o">))</span> <span class="n">number</span> <span class="o">=</span> <span class="s">"210"</span><span class="o">;</span>
+
+        <span class="k">return</span> <span class="n">number</span><span class="o">;</span> <span class="c1">//생성자로 받아온 Exception code를 비교해 해당 문자열을 리턴하는 메서드</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

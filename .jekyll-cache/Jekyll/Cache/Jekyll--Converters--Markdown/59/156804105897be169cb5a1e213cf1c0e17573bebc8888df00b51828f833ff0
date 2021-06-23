@@ -1,0 +1,52 @@
+I"�<ul class="toc" id="markdown-toc">
+  <li><a href="#decode란" id="markdown-toc-decode란">Decode란?</a></li>
+</ul>
+
+<h2 id="decode란">Decode란?</h2>
+
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">풀다</code>라는 단어의 뜻을 가졌으며 <em>오라클에서만</em> 지원하는 함수로써 <code class="language-plaintext highlighter-rouge">SELECT</code>문 내에 비교연산을 수행해주는 함수이다.
+<code class="language-plaintext highlighter-rouge">DECODE</code>내 선언된 인자의 수에 따라 사용 방식이 다르다.</p>
+</blockquote>
+
+<p>Decode는 선언한 인자의 개수에 따라 사용방식이 달라진다.
+인자 개수에 따른 사용 방식은 아래와 같다.</p>
+
+<p>인자 수 : 3개(A,B,C)</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+  A와 B가 같다면 결과는 C
+  A와 B가 다르면 결과는 null
+*/</span>
+<span class="k">SELECT</span> <span class="n">DECODE</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="k">C</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">DUAL</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>인자 수 : 4개(A,B,C,D)</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*  
+  A와 B가 같다면 결과는 C
+  A와 B가 다르면 결과는 D
+*/</span>
+<span class="k">SELECT</span> <span class="n">DECODE</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="k">C</span><span class="p">,</span><span class="n">D</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">DUAL</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>인자 수 : 5개(A,B,C,D,E)
+5개부터 인자비교가 달라짐 A-B, A-D</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+  A와 B가 같다면 결과는 C
+  A와 D가 같다면 결과는 E
+  둘다 아니면 null
+*/</span>
+<span class="k">SELECT</span> <span class="n">DECODE</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="k">C</span><span class="p">,</span><span class="n">D</span><span class="p">,</span><span class="n">E</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">DUAL</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>인자 수 : 6개(A,B,C,D,E,F)
+5개부터 인자비교가 달라짐 A-B, A-D</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+  A와 B가 같다면 결과는 C
+  A와 D가 같다면 결과는 E
+  둘다 아니면 F
+*/</span>
+<span class="k">SELECT</span> <span class="n">DECODE</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="k">C</span><span class="p">,</span><span class="n">D</span><span class="p">,</span><span class="n">E</span><span class="p">,</span><span class="n">F</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">DUAL</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>헷갈릴 수 있는 <code class="language-plaintext highlighter-rouge">Decode</code> 억지로 외우지말고 자주 써먹어보자.</p>
+:ET

@@ -1,0 +1,127 @@
+I"{(<ul class="toc" id="markdown-toc">
+  <li><a href="#참고한-글" id="markdown-toc-참고한-글">참고한 글</a></li>
+  <li><a href="#eval-uneval" id="markdown-toc-eval-uneval">eval(), uneval()</a></li>
+  <li><a href="#encodeuri-decodeuri" id="markdown-toc-encodeuri-decodeuri">encodeURI(), decodeURI()</a></li>
+  <li><a href="#encodeuricomponent-decodeuricomponent" id="markdown-toc-encodeuricomponent-decodeuricomponent">encodeURIComponent(), decodeURIComponent()</a></li>
+  <li><a href="#isfinite-isnan" id="markdown-toc-isfinite-isnan">isFinite(), isNaN()</a></li>
+  <li><a href="#parsefloat" id="markdown-toc-parsefloat">parseFloat()</a></li>
+  <li><a href="#parseint" id="markdown-toc-parseint">parseInt()</a></li>
+</ul>
+
+<h4 id="참고한-글">참고한 글</h4>
+<ul>
+  <li><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference">https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference</a></li>
+  <li><a href="http://www.w3schools.com/jsref/jsref_obj_global.asp">http://www.w3schools.com/jsref/jsref_obj_global.asp</a></li>
+</ul>
+
+<h2 id="eval-uneval">eval(), uneval()</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>eval( jsString )
+uneval( object )
+</code></pre></div></div>
+<ul>
+  <li><strong>jsString</strong>: 코드로 읽어들일 문자열</li>
+  <li><strong>object</strong>: 문자열로 변환할 객체</li>
+</ul>
+
+<p>문자열 리터럴을 자바스크립트 코드로 읽고 실행하거나 반대로 코드나 객체를 문자열로 변환한다.</p>
+
+<p>예를 몇가지 들면:</p>
+<ul>
+  <li>eval(‘432 * 10’) 의 경우엔 432 x 10의 결과인 4320이 리턴된다.</li>
+  <li>eval(‘alert()’) 의 경우 경고창이 띄워진다.</li>
+  <li>다음 코드는 form.search_word의 value를 리턴한다: <code class="language-plaintext highlighter-rouge">eval("document.forms[0].search_word.value");</code></li>
+  <li>다음 코드는 name프로퍼티를 갖는 Javascript Object를 의미한다: <code class="language-plaintext highlighter-rouge">eval('{name="value"}')</code></li>
+</ul>
+
+<p>참고로 eval()을 대신하여 Function 생성자를 이용하기도 한다.</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span> <span class="k">new</span> <span class="nb">Function</span><span class="p">(</span> <span class="dl">'</span><span class="s1">alert("hi");</span><span class="dl">'</span> <span class="p">)</span> <span class="p">)();</span>
+</code></pre></div></div>
+<p>uneval()은 비표준 함수로 chrome에서 지원되지 않는다.</p>
+
+<h2 id="encodeuri-decodeuri">encodeURI(), decodeURI()</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>encodeURI( jsString )
+decodeURI( jsString )
+</code></pre></div></div>
+<ul>
+  <li><strong>jsString</strong>: 변환할 문자열</li>
+</ul>
+
+<p>문자열을 HTTP 전송에 적합한 코드로 암호화하거나 복호화한다.</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">encodeURI</span><span class="p">(</span><span class="dl">'</span><span class="s1">가</span><span class="dl">'</span><span class="p">);</span>  <span class="c1">// "%EA%B0%80"</span>
+<span class="nb">decodeURI</span><span class="p">(</span><span class="dl">'</span><span class="s1">%EA%B0%80</span><span class="dl">'</span><span class="p">);</span>  <span class="c1">// "가"</span>
+</code></pre></div></div>
+
+<h2 id="encodeuricomponent-decodeuricomponent">encodeURIComponent(), decodeURIComponent()</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>encodeURIComponent( jsString )
+decodeURIComponent( jsString )
+</code></pre></div></div>
+<ul>
+  <li><strong>jsString</strong>: 변환할 문자열</li>
+</ul>
+
+<p>encodeURI()는 jsString을 쿼리스트링의 전체라고 보며 “?”, “=”, “&amp;”를 변환하지 않는다.
+반면 encodeURIComponent()는 jsString을 쿼리스트링의 일부분이라 보며 예외 없이 모든 문자를 변환한다.</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">encodeURI</span><span class="p">(</span><span class="dl">'</span><span class="s1">?=&amp;</span><span class="dl">'</span><span class="p">);</span>  <span class="c1">// "?=&amp;"</span>
+<span class="nb">encodeURIComponent</span><span class="p">(</span><span class="dl">'</span><span class="s1">?=&amp;</span><span class="dl">'</span><span class="p">);</span>  <span class="c1">// "%3F%3D%26"</span>
+</code></pre></div></div>
+
+<h2 id="isfinite-isnan">isFinite(), isNaN()</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>isFinite( testValue )
+</code></pre></div></div>
+<ul>
+  <li><strong>testValue</strong>: 테스트할 수치</li>
+</ul>
+
+<p>수치가 무효 수치인가, 유효한 수치인가를 판명한다. 유효수치이면 true 값을 반환하고(return), 무효수치이면 false 값을 반환한다. isNaN() 과는 반대 결과를 반환한다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>isNaN( testValue )
+</code></pre></div></div>
+<ul>
+  <li><strong>testValue</strong>: 테스트할 수치</li>
+</ul>
+
+<p>isNaN()은 isFinite()의 반대격으로 무효수치이면 true 값을 반환하고(return), 유효수치이면 false 값을 반환한다. (문자열 앞의 공백은 검사할 수 없다.)</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">isFinite</span><span class="p">(</span><span class="mi">2002</span><span class="p">);</span>  <span class="c1">// true</span>
+<span class="nb">isFinite</span><span class="p">(</span><span class="dl">'</span><span class="s1">123.4567</span><span class="dl">'</span><span class="p">);</span>  <span class="c1">// true</span>
+<span class="nb">isFinite</span><span class="p">(</span><span class="dl">'</span><span class="s1">a</span><span class="dl">'</span><span class="p">);</span>  <span class="c1">// false</span>
+
+<span class="nb">isNaN</span><span class="p">(</span><span class="dl">'</span><span class="s1">123.4567</span><span class="dl">'</span><span class="p">);</span>  <span class="c1">// false</span>
+<span class="nb">isNaN</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>  <span class="c1">// false</span>
+<span class="nb">isNaN</span><span class="p">(</span><span class="dl">"</span><span class="s2">Hello</span><span class="dl">"</span><span class="p">);</span>  <span class="c1">// true</span>
+</code></pre></div></div>
+
+<h2 id="parsefloat">parseFloat()</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>parseFloat( object )
+</code></pre></div></div>
+<ul>
+  <li><strong>object</strong>: 변환할 수치</li>
+</ul>
+
+<p>값을 부동 소수점 실수로 변환 한다.</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">parseFloat</span><span class="p">(</span><span class="dl">"</span><span class="s2">10.33</span><span class="dl">"</span><span class="p">);</span> <span class="c1">// 10.33</span>
+<span class="nb">parseFloat</span><span class="p">(</span><span class="dl">"</span><span class="s2">5.4321e6</span><span class="dl">"</span><span class="p">)</span> <span class="c1">// 5432100</span>
+</code></pre></div></div>
+
+<h2 id="parseint">parseInt()</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>parseInt( object [, radix ] )
+</code></pre></div></div>
+<ul>
+  <li><strong>object</strong>: 변환할 수치.</li>
+  <li><strong>radix</strong>: 기수 (진수 구분)</li>
+</ul>
+
+<p>값을 정수로 변환한다. 숫자로 변환 불가능한 값을 입력받으면 NaN을 리턴한다.</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">parseInt</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span> <span class="c1">// 100</span>
+<span class="nb">parseInt</span><span class="p">(</span><span class="dl">'</span><span class="s1">100</span><span class="dl">'</span><span class="p">);</span> <span class="c1">// 100</span>
+<span class="nb">parseInt</span><span class="p">(</span><span class="k">new</span> <span class="nb">String</span><span class="p">(</span><span class="mi">1100</span><span class="p">));</span> <span class="c1">// 1100</span>
+<span class="nb">parseInt</span><span class="p">(</span><span class="dl">'</span><span class="s1">10.00</span><span class="dl">'</span><span class="p">);</span> <span class="c1">// 10</span>
+<span class="nb">parseInt</span><span class="p">(</span><span class="dl">'</span><span class="s1">10.98</span><span class="dl">'</span><span class="p">);</span> <span class="c1">// 10</span>
+<span class="nb">parseInt</span><span class="p">(</span><span class="dl">'</span><span class="s1">40 years</span><span class="dl">'</span><span class="p">);</span> <span class="c1">// 40</span>
+<span class="nb">parseInt</span><span class="p">(</span><span class="dl">'</span><span class="s1">010</span><span class="dl">'</span><span class="p">);</span> <span class="c1">// 10</span>
+<span class="nb">parseInt</span><span class="p">(</span><span class="dl">'</span><span class="s1">0x10</span><span class="dl">'</span><span class="p">);</span> <span class="c1">// 16</span>
+</code></pre></div></div>
+<p>radix가 있고 없고의 결과가 다르다. 예를 들어 radix가 16일 때 object는 16진수로 간주된다.</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">parseInt</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span> <span class="c1">// 256</span>
+</code></pre></div></div>
+<p>이 경우 숫자 16진수 100을 10진수로 변환한 결과인 256을 리턴한다.</p>
+:ET

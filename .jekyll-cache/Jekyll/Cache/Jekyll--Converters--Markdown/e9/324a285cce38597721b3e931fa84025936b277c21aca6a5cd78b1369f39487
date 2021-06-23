@@ -1,0 +1,22 @@
+I"�<p>자바스크립트에는 선언부에 명시되지 않은 파라미터를 별도로 저장하는 프로퍼티가 존재한다.</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">argsTest</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// ... 생략</span>
+    <span class="nx">arguments</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span> <span class="c1">// 'arg3'</span>
+<span class="p">}</span>
+
+<span class="nx">argsTest</span><span class="p">(</span><span class="dl">'</span><span class="s1">arg1</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">arg2</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">arg3</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div></div>
+<p>위의 <code class="language-plaintext highlighter-rouge">argsTest()</code> 호출 시 전달된 세 개의 문자열은 배열로 생성되며 <code class="language-plaintext highlighter-rouge">arguments</code> 프로퍼티를 통해 접근한다.</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">argsTest</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="dl">'</span><span class="s1">usage: argsTest(url, 파라미터1, 파라미터2, ...)</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">i</span> <span class="o">!=</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span> <span class="nx">arguments</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">!=</span> <span class="dl">'</span><span class="s1">string</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">argsTest()의 인수는 문자열만 가능합니다.</span><span class="dl">'</span><span class="p">);</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+:ET

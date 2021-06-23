@@ -1,0 +1,365 @@
+I"�<ul class="toc" id="markdown-toc">
+  <li><a href="#관련-문서" id="markdown-toc-관련-문서">관련 문서</a></li>
+  <li><a href="#인코딩-encoding이란" id="markdown-toc-인코딩-encoding이란">인코딩, encoding이란?</a></li>
+  <li><a href="#스트림-stream이란" id="markdown-toc-스트림-stream이란">스트림, stream이란?</a></li>
+  <li><a href="#바이트-기반-스트림-inputstream-outputstream" id="markdown-toc-바이트-기반-스트림-inputstream-outputstream">바이트 기반 스트림: InputStream, OutputStream</a>    <ul>
+      <li><a href="#fileintputstreamfileoutputstream" id="markdown-toc-fileintputstreamfileoutputstream">FileIntputstream/FileOutputStream</a></li>
+    </ul>
+  </li>
+  <li><a href="#바이트-기반-보조-스트림" id="markdown-toc-바이트-기반-보조-스트림">바이트 기반 보조 스트림</a>    <ul>
+      <li><a href="#bufferedinputstreambufferedoutputstream" id="markdown-toc-bufferedinputstreambufferedoutputstream">BufferedInputStream/BufferedOutputStream</a>        <ul>
+          <li><a href="#bufferedstream-사용-예" id="markdown-toc-bufferedstream-사용-예">BufferedStream 사용 예</a></li>
+        </ul>
+      </li>
+      <li><a href="#datainputstreamdataoutputstream" id="markdown-toc-datainputstreamdataoutputstream">DataInputStream/DataOutputStream</a></li>
+    </ul>
+  </li>
+  <li><a href="#문자-기반-스트림-reader-writer" id="markdown-toc-문자-기반-스트림-reader-writer">문자 기반 스트림: Reader, Writer</a>    <ul>
+      <li><a href="#filereaderfilewriter" id="markdown-toc-filereaderfilewriter">FileReader/FileWriter</a></li>
+    </ul>
+  </li>
+  <li><a href="#문자-기반-보조-스트림" id="markdown-toc-문자-기반-보조-스트림">문자 기반 보조 스트림</a>    <ul>
+      <li><a href="#bufferedreaderbufferedwriter" id="markdown-toc-bufferedreaderbufferedwriter">BufferedReader/BufferedWriter</a>        <ul>
+          <li><a href="#응용---세미콜론을-포함한-줄만-출력" id="markdown-toc-응용---세미콜론을-포함한-줄만-출력">응용 - 세미콜론”;”을 포함한 줄만 출력</a></li>
+        </ul>
+      </li>
+      <li><a href="#inputstreamreaderoutputstreamwriter" id="markdown-toc-inputstreamreaderoutputstreamwriter">InputStreamReader/OutputStreamWriter</a></li>
+    </ul>
+  </li>
+  <li><a href="#printwriter" id="markdown-toc-printwriter">PrintWriter</a></li>
+</ul>
+
+<h4 id="관련-문서">관련 문서</h4>
+
+<ul>
+  <li><a href="https://ko.wikipedia.org/wiki/%EB%AF%B8%EA%B5%AD%EC%A0%95%EB%B3%B4%EA%B5%90%ED%99%98%ED%91%9C%EC%A4%80%EB%B6%80%ED%98%B8">아스키 코드표</a></li>
+</ul>
+
+<p>이 글은 남궁성 저 ‘Java의 정석’을 참고하여 작성되었음.  http://cafe.naver.com/javachobostudy.cafe</p>
+
+<h4 id="인코딩-encoding이란">인코딩, encoding이란?</h4>
+
+<p>응용프로그램의 데이터를 스트림(Stream)형식으로 변환시켜 보조기억장치나 네트워크상에서 사용가능한 형태로 변환하는 작업.</p>
+
+<h4 id="스트림-stream이란">스트림, stream이란?</h4>
+
+<p>일련의 연속된 데이터의 흐름으로 자바프로그램과 외부장치 사이의 데이터 교환을 위한 처리 방식이다. 추상화, 실제 장치와 상관없이 공통된 접근 방식을 제공한다.</p>
+
+<h2 id="바이트-기반-스트림-inputstream-outputstream">바이트 기반 스트림: InputStream, OutputStream</h2>
+
+<p>바이트 기반 스트림은 바이트단위로 데이터를 전송하는 클래스로 InputStream과 OutputStream을 상속받는 FileStream, ByteArrayStream, PipedStream, AudioStream, StringBufferStream 등이 있다.</p>
+
+<p>바이트기반 스트림은 종류에 따라 <code class="language-plaintext highlighter-rouge">mark()</code>와 <code class="language-plaintext highlighter-rouge">reset()</code>을 사용해 특정 지점을 마킹하고 그 지점에서 다시 읽는것이 가능하다. <code class="language-plaintext highlighter-rouge">flush()</code>는 버퍼가 있는 출력용 스트림(OutputStream을 확장한 클래스들)의 경우에만 의미가 있고, OutputStream에 정의된 <code class="language-plaintext highlighter-rouge">flush()</code>는 아무것도 하지 않는다.</p>
+
+<h3 id="fileintputstreamfileoutputstream">FileIntputstream/FileOutputStream</h3>
+
+<p>파일 입출력에 사용되는 스트림 클래스.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">File</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="s">"c:\\iotest"</span><span class="o">,</span> <span class="s">"stream.txt"</span><span class="o">);</span>
+<span class="k">if</span> <span class="o">(!</span> <span class="n">file</span><span class="o">.</span><span class="na">exists</span><span class="o">())</span> <span class="o">{</span>
+    <span class="n">file</span><span class="o">.</span><span class="na">createNewFile</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="c1">// 쓰기</span>
+<span class="nc">FileOutputStream</span> <span class="n">fos</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileOutputStream</span><span class="o">(</span><span class="s">"c:\\iotest\\stream.txt"</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+<span class="c1">// true : Append, 이어쓰기</span>
+<span class="c1">// false : Create, 기존 내용에 덮어쓰기</span>
+<span class="c1">// 기본값 : false</span>
+
+<span class="n">fos</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="mi">97</span><span class="o">);</span> <span class="c1">// a가 stream.txt에 쓰여짐</span>
+<span class="n">fos</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="mi">98</span><span class="o">);</span> <span class="c1">// b가 stream.txt에 쓰여짐</span>
+<span class="n">fos</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="mi">99</span><span class="o">);</span> <span class="c1">// c가 stream.txt에 쓰여짐</span>
+<span class="n">fos</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+
+<span class="c1">// 읽기</span>
+<span class="nc">FileInputStream</span> <span class="n">fis</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileInputStream</span><span class="o">(</span><span class="s">"c:\\iotest\\stream.txt"</span><span class="o">);</span>
+
+<span class="kt">int</span> <span class="n">data</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+<span class="k">while</span> <span class="o">((</span><span class="n">data</span> <span class="o">=</span> <span class="n">fis</span><span class="o">.</span><span class="na">read</span><span class="o">())</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// 더 이상 읽을것이 없을 때 -1</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">((</span><span class="kt">char</span><span class="o">)</span> <span class="n">data</span><span class="o">);</span> <span class="c1">//스트림이 읽은 바이트코드를 문자로 변환하여 출력</span>
+<span class="o">}</span>
+<span class="n">fis</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p>아래는 파일을 읽어와 그대로 다른파일에 내용을 출력하는 코드다:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">FileInputStream</span> <span class="n">fis</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileInputStream</span><span class="o">(</span><span class="s">"c:\\iotest\\origin.txt"</span><span class="o">);</span>
+<span class="nc">FileOutputStream</span> <span class="n">fos</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileOutputStream</span><span class="o">(</span><span class="s">"c:\\iotest\\clone.txt"</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>         
+
+<span class="kt">int</span> <span class="n">data</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+<span class="k">while</span> <span class="o">((</span><span class="n">data</span> <span class="o">=</span> <span class="n">fis</span><span class="o">.</span><span class="na">read</span><span class="o">())</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// 더 이상 읽을것이 없을 때 -1</span>
+    <span class="n">fos</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="n">fis</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+<span class="n">fos</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p>다음처럼 작성하면 String 변수의 값을 출력한다:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">FileOutputStream</span> <span class="n">fos</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileOutputStream</span><span class="o">(</span><span class="s">"c:\\iotest\\stream.txt"</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+
+<span class="nc">String</span> <span class="n">txt</span> <span class="o">=</span> <span class="s">"안녕! Fine and strong day! im waldo!"</span><span class="o">;</span>
+
+<span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">txt</span><span class="o">.</span><span class="na">length</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span> <span class="c1">//문자열의 길이만큼</span>
+    <span class="kt">char</span> <span class="n">c</span> <span class="o">=</span> <span class="n">txt</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">);</span> <span class="c1">// 문자로 형변환 후</span>
+    <span class="n">fos</span><span class="o">.</span><span class="na">write</span><span class="o">((</span><span class="kt">int</span><span class="o">)</span> <span class="n">c</span><span class="o">);</span> <span class="c1">// 출력</span>
+<span class="o">}</span>
+<span class="n">fos</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p>단, 위 방법은 한글을 처리할 수 없다. 바이트 스트림으로 한글을 처리하고 싶다면 다음처럼 한다:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">FileOutputStream</span> <span class="n">fos</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileOutputStream</span><span class="o">(</span><span class="s">"c:\\iotest\\stream.txt"</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+<span class="nc">String</span> <span class="n">txt</span> <span class="o">=</span> <span class="s">"안녕! Fine and strong day! im waldo!"</span><span class="o">;</span>
+<span class="n">fos</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">txt</span><span class="o">.</span><span class="na">getBytes</span><span class="o">());</span>
+<span class="n">fos</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</code></pre></div></div>
+
+<h2 id="바이트-기반-보조-스트림">바이트 기반 보조 스트림</h2>
+
+<p>스트림의 기능을 보완하기 위한 클래스를 보조 스트림이라 하며 바이트기반, 문자기반 스트림 모두 보조 스트림이 제공된다.</p>
+
+<p>보조 스트림은 실제 데이터를 주고 받는 스트림이 아니기 때문에 보조 스트림만으로는 입출력을 처리할 수 없고, 바이트 기반 스트림 혹은 문자 기반 스트림을 먼저 생성한 다음 이를 이용해 보조 스트림을 생성한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 기반 스트림 생성</span>
+<span class="nc">FileInputStream</span> <span class="n">fis</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileInputStream</span><span class="o">(</span><span class="s">"c:\\iotest\\sample.txt"</span><span class="o">);</span>
+
+<span class="c1">// 기반 스트림을 이용한 보조 스트림 생성</span>
+<span class="nc">BufferedInputStream</span> <span class="n">bis</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BufferedInputStream</span><span class="o">(</span><span class="n">fis</span><span class="o">);</span>
+<span class="n">bis</span><span class="o">.</span><span class="na">read</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p>위를 보면 BufferedInputStream의 <code class="language-plaintext highlighter-rouge">read()</code>를 사용한 것 같지만 실제 입력기능은 기반 스트림은 FileInputStream이 수행하고 BufferedInputStream은 버퍼 기능만 제공한다.</p>
+
+<p>이처럼 보조 스트림의 경우 대부분 입출력에 버퍼를 이용한다는 특징이 있는데 얼핏 별거 없어 보이지만 데이터의 양이 많을 수록 버퍼가 처리 속도에 상당한 영향을 끼친다.</p>
+
+<h3 id="bufferedinputstreambufferedoutputstream">BufferedInputStream/BufferedOutputStream</h3>
+
+<p>버퍼를 이용해 스트림의 입출력 효율을 높이기 위해 제공되는 보조 스트림이다.</p>
+
+<p>한 바이트 씩 읽고 쓰는 것보다 버퍼(바이트배열)을 이용해 여러 바이트를 한 번에 처리하는 것이 빠르기 때문에 대부분의 입출력 작업에 사용된다.</p>
+
+<p>생성자에 버퍼 크기를 지정할 수 있는데 이를 생략하면 기본값으로 8192 byte의 버퍼를 갖게 된다. 버퍼 크기는 입력 소스로부터 한 번에 가져올 수 있는 데이터의 크기로 지정하면 좋다고 한다카더라.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">File</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="s">"c:\\iotest\\sample.txt"</span><span class="o">);</span>
+
+<span class="nc">FileInputStream</span> <span class="n">fis</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileInputStream</span><span class="o">(</span><span class="n">file</span><span class="o">);</span>
+<span class="nc">BufferedInputStream</span> <span class="n">bis</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BufferedInputStream</span><span class="o">(</span><span class="n">fis</span><span class="o">,</span> <span class="mi">4096</span><span class="o">);</span> <span class="c1">// 버퍼 사이즈를 지정할 수 있다.</span>
+
+<span class="k">while</span> <span class="o">(</span><span class="n">bis</span><span class="o">.</span><span class="na">available</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">((</span><span class="kt">char</span><span class="o">)</span> <span class="n">bis</span><span class="o">.</span><span class="na">read</span><span class="o">());</span>
+<span class="o">}</span>
+<span class="n">bis</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p>여기서는 <code class="language-plaintext highlighter-rouge">available()</code>을 사용했는데 이는 Stream 클래스의 메서드로 스트림으로부터 읽어 올 수 있는 데이터의 크기를 리턴한다.</p>
+
+<h4 id="bufferedstream-사용-예">BufferedStream 사용 예</h4>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 파일 복사</span>
+<span class="nc">BufferedInputStream</span> <span class="n">bis</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BufferedInputStream</span><span class="o">(</span><span class="k">new</span> <span class="nc">FileInputStream</span><span class="o">(</span><span class="s">"C:/iotest/readme.txt"</span><span class="o">));</span>
+<span class="nc">BufferedOutputStream</span> <span class="n">bos</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BufferedOutputStream</span><span class="o">(</span><span class="k">new</span> <span class="nc">FileOutputStream</span><span class="o">(</span><span class="s">"C:/iotest/writeme.txt"</span><span class="o">));</span>
+
+<span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+
+<span class="k">while</span> <span class="o">(</span><span class="n">bis</span><span class="o">.</span><span class="na">available</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">len</span> <span class="o">++;</span>
+    <span class="n">bos</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">bis</span><span class="o">.</span><span class="na">read</span><span class="o">());</span>
+<span class="o">}</span>
+
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"총 %,d바이트 복사됨\n"</span><span class="o">,</span> <span class="n">len</span><span class="o">);</span>
+
+<span class="n">bos</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
+<span class="n">bis</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+<span class="n">bos</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+
+
+<span class="c1">// String 직접 쓰기</span>
+<span class="nc">BufferedOutputStream</span> <span class="n">bos2</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BufferedOutputStream</span><span class="o">(</span><span class="k">new</span> <span class="nc">FileOutputStream</span><span class="o">(</span><span class="s">"C:/iotest/result.txt"</span><span class="o">));</span>
+<span class="nc">String</span> <span class="n">txt</span> <span class="o">=</span> <span class="s">"안녕하신가?\r\ngood morning!"</span><span class="o">;</span>
+<span class="n">bos2</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">txt</span><span class="o">.</span><span class="na">getBytes</span><span class="o">());</span>
+<span class="n">bos2</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
+<span class="n">bos2</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</code></pre></div></div>
+
+<h3 id="datainputstreamdataoutputstream">DataInputStream/DataOutputStream</h3>
+<p>FileterStream을 상속하면서 DataInput/DataOutput 인터페이스를 구현한 클래스. 모든 원시형 값을 읽고 쓸 수 있다.</p>
+
+<p>DataOutputStream은 출력 시 각 원시형 값을 16진수로 표현하여 저장한다. 예를 들어 int형 값은 4byte의 16진수로 출력된다.</p>
+
+<p>DataStream은 문자를 직접 저장하는 것보다 속도가 빠르다는 특징이 있다. 이는 data와 문자간 변환 과정이 없기 때문이다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">File</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="s">"c:\\iotest\\sample.dat"</span><span class="o">);</span>
+
+<span class="c1">// 쓰기</span>
+<span class="nc">DataOutputStream</span> <span class="n">dos</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DataOutputStream</span><span class="o">(</span><span class="k">new</span> <span class="nc">FileOutputStream</span><span class="o">(</span><span class="n">file</span><span class="o">));</span>
+<span class="n">dos</span><span class="o">.</span><span class="na">writeBoolean</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+<span class="n">dos</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="mi">5</span><span class="o">);</span>
+<span class="n">dos</span><span class="o">.</span><span class="na">writeByte</span><span class="o">((</span><span class="kt">byte</span><span class="o">)</span> <span class="mi">5</span><span class="o">);</span>
+<span class="n">dos</span><span class="o">.</span><span class="na">writeInt</span><span class="o">(</span><span class="mi">100</span><span class="o">);</span>
+<span class="n">dos</span><span class="o">.</span><span class="na">writeDouble</span><span class="o">(</span><span class="mf">200.5</span><span class="o">);</span>
+<span class="n">dos</span><span class="o">.</span><span class="na">writeUTF</span><span class="o">(</span><span class="s">"utfutfutf"</span><span class="o">);</span>
+
+<span class="n">dos</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
+<span class="n">dos</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+
+<span class="c1">// 읽기</span>
+<span class="nc">DataInputStream</span> <span class="n">dis</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DataInputStream</span><span class="o">(</span><span class="k">new</span> <span class="nc">FileInputStream</span><span class="o">(</span><span class="n">file</span><span class="o">));</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">dis</span><span class="o">.</span><span class="na">readBoolean</span><span class="o">());</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">dis</span><span class="o">.</span><span class="na">read</span><span class="o">());</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">dis</span><span class="o">.</span><span class="na">readByte</span><span class="o">());</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">dis</span><span class="o">.</span><span class="na">readInt</span><span class="o">());</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">dis</span><span class="o">.</span><span class="na">readDouble</span><span class="o">());</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">dis</span><span class="o">.</span><span class="na">readUTF</span><span class="o">());</span>
+<span class="n">dis</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p>특정한 변환작업이나 자릿수를 셀 필요없이 읽기만 하면 되는데 주의할 점이 있다. 데이터를 쓰는 과정에서 자료형을 달리해서 저장할 경우 읽어올 때도 반드시 그 순서에 맞게 읽어와야 한다는 것이다. 만약 이 순서가 바뀌면 read 메서드들이 올바른 자료형으로 변환하지 못해 엉뚱한 값을 출력하게 된다.</p>
+
+<h2 id="문자-기반-스트림-reader-writer">문자 기반 스트림: Reader, Writer</h2>
+
+<p>바이트 기반 스트림은 1byte단위로 읽고 쓰기 때문에 크기가 2byte 이상인 문자를 다루는데 문제가 있다. 문자 기반 스트림은 이 점을 보완하기 위한 클래스다. 또한 문자 인코딩간 변환을 자동으로 처리해준다는 장점이 있다.</p>
+
+<p>Reader와 Writer 클래스는 바이트 스트림에서 처럼 문자 기반 스트림 클래스들이 상속받은 부모 클래스로 byte 배열이 아닌 char 배열을 사용하는 <code class="language-plaintext highlighter-rouge">read()</code>, <code class="language-plaintext highlighter-rouge">write()</code>가 추상메서드로 구현되어 있다.</p>
+
+<h3 id="filereaderfilewriter">FileReader/FileWriter</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 쓰기</span>
+<span class="nc">FileWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileWriter</span><span class="o">(</span><span class="s">"c:\\iotest\\sample.txt"</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+<span class="c1">//true: Append, 이어쓰기</span>
+<span class="c1">//false: Create, 기존 내용에 덮어쓰기</span>
+<span class="c1">//기본값 : false</span>
+
+<span class="nc">String</span> <span class="n">txt</span> <span class="o">=</span> <span class="s">"You just activated \r\nMY TRAP CARD \r\n붑밥붑밥붑밥바"</span><span class="o">;</span>
+<span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">txt</span><span class="o">);</span>
+<span class="n">out</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+
+<span class="c1">// 읽기</span>
+<span class="nc">FileReader</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileReader</span><span class="o">(</span><span class="s">"c:\\iotest\\sample.txt"</span><span class="o">);</span>
+<span class="kt">int</span> <span class="n">data</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+<span class="k">while</span><span class="o">((</span><span class="n">data</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">())</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// 파일 내용의 길이만큼 루프</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">((</span><span class="kt">char</span><span class="o">)</span> <span class="n">data</span><span class="o">);</span> <span class="c1">// 읽어온 데이터를 문자로 변환 - 출력</span>
+<span class="o">}</span>
+<span class="n">in</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 파일 복사</span>
+<span class="nc">FileReader</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileReader</span><span class="o">(</span><span class="s">"c:\\iotest\\sample.txt"</span><span class="o">);</span>
+<span class="nc">FileWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileWriter</span><span class="o">(</span><span class="s">"c:\\iotest\\clone.txt"</span><span class="o">);</span>
+
+<span class="kt">int</span> <span class="n">data</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+<span class="k">while</span> <span class="o">((</span><span class="n">data</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">())</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="n">in</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+<span class="n">out</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+
+<span class="c1">// String 바로 쓰기</span>
+<span class="nc">FileWriter</span> <span class="n">out2</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileWriter</span><span class="o">(</span><span class="s">"c:\\iotest\\result.txt"</span><span class="o">);</span>
+<span class="nc">String</span> <span class="n">txt</span> <span class="o">=</span> <span class="s">"안녕? abcdefg\r\nhihi~"</span><span class="o">;</span>
+<span class="n">out2</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">txt</span><span class="o">);</span>
+<span class="n">out2</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</code></pre></div></div>
+
+<h2 id="문자-기반-보조-스트림">문자 기반 보조 스트림</h2>
+
+<h3 id="bufferedreaderbufferedwriter">BufferedReader/BufferedWriter</h3>
+
+<p>버퍼를 이용해 Reader와 Writer의 입출력 효율을 개선한 클래스.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 쓰기</span>
+<span class="nc">BufferedWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BufferedWriter</span><span class="o">(</span><span class="k">new</span> <span class="nc">FileWriter</span><span class="o">(</span><span class="s">"c:\\iotest\\buffer.txt"</span><span class="o">,</span> <span class="kc">false</span><span class="o">));</span>
+<span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">"버퍼드리더를 활용한 \r\n파일출력"</span><span class="o">);</span>
+<span class="n">out</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>        
+<span class="n">out</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+
+<span class="c1">// 읽기</span>
+<span class="nc">BufferedReader</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="nc">FileReader</span><span class="o">(</span><span class="s">"c:\\iotest\\buffer.txt"</span><span class="o">));</span>
+<span class="nc">String</span> <span class="n">data</span><span class="o">;</span>
+<span class="k">while</span><span class="o">((</span><span class="n">data</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">readLine</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span> <span class="c1">//읽을게 없으면 null 리턴</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="n">in</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+
+<span class="c1">//// read()를 사용할 경우</span>
+<span class="c1">//int data;</span>
+<span class="c1">//while((data = in.read()) != -1) {</span>
+<span class="c1">//    System.out.print((char) data);</span>
+<span class="c1">//}</span>
+<span class="c1">//in.close();</span>
+</code></pre></div></div>
+
+<p>바이트 기반 보조 스트림과 마찬가지로 <code class="language-plaintext highlighter-rouge">flush()</code>를 실행하거나 스트림을 닫아야 버퍼의 데이터가 출력된다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">read()</code>는 stream의 경우와 사용방법은 거의 차이나지 않지만 새롭게 추가된 <code class="language-plaintext highlighter-rouge">readLine()</code>은 <code class="language-plaintext highlighter-rouge">read()</code>와 다르게 줄 단위로 데이터를 읽어오며 더 이상 읽을 데이터가 없으면 -1이 아니라 null을 리턴한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 파일 복사</span>
+<span class="nc">BufferedReader</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="nc">FileReader</span><span class="o">(</span><span class="s">"c:\\iotest\\sample.txt"</span><span class="o">));</span>
+<span class="nc">BufferedWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BufferedWriter</span><span class="o">(</span><span class="k">new</span> <span class="nc">FileWriter</span><span class="o">(</span><span class="s">"c:\\iotest\\clone.txt"</span><span class="o">));</span>
+<span class="nc">String</span> <span class="n">data</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+<span class="k">while</span> <span class="o">((</span><span class="n">data</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">readLine</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">data</span> <span class="o">+</span> <span class="s">"\r\n"</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="n">out</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
+<span class="n">in</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+<span class="n">out</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+
+<span class="c1">// String 직접 쓰기</span>
+<span class="nc">BufferedWriter</span> <span class="n">out2</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BufferedWriter</span><span class="o">(</span><span class="k">new</span> <span class="nc">FileWriter</span><span class="o">(</span><span class="s">"c:\\iotest\\result.txt"</span><span class="o">));</span>
+<span class="nc">String</span> <span class="n">txt</span> <span class="o">=</span> <span class="s">"호옹이"</span><span class="o">;</span>
+<span class="n">out2</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">txt</span><span class="o">);</span>
+<span class="n">out2</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
+<span class="n">out2</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</code></pre></div></div>
+
+<h4 id="응용---세미콜론을-포함한-줄만-출력">응용 - 세미콜론”;”을 포함한 줄만 출력</h4>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 읽기</span>
+<span class="nc">BufferedReader</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="nc">FileReader</span><span class="o">(</span><span class="s">"c:\\iotest\\Test1.java"</span><span class="o">));</span>
+
+<span class="nc">String</span> <span class="n">data</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+<span class="kt">int</span> <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+<span class="k">while</span> <span class="o">((</span><span class="n">data</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">readLine</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">cnt</span> <span class="o">++;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">data</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="s">";"</span><span class="o">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">cnt</span> <span class="o">+</span> <span class="s">":"</span> <span class="o">+</span> <span class="n">data</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="inputstreamreaderoutputstreamwriter">InputStreamReader/OutputStreamWriter</h3>
+
+<p>바이트 기반 스트림을 문자 기반 스트림으로 연결시켜주는 역할을 한다. 읽거나 쓸 때 문자 인코딩을 지정할 수 있다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">File</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="s">"c:\\iotest\\sample.txt"</span><span class="o">);</span>
+<span class="nc">InputStreamReader</span> <span class="n">inStrReader</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">InputStreamReader</span><span class="o">(</span><span class="k">new</span> <span class="nc">FileInputStream</span><span class="o">(</span><span class="n">file</span><span class="o">),</span> <span class="s">"utf-8"</span><span class="o">);</span>
+<span class="nc">BufferedReader</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BufferedReader</span><span class="o">(</span><span class="n">inStrReader</span><span class="o">);</span>
+
+<span class="nc">String</span> <span class="n">data</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+<span class="k">while</span> <span class="o">((</span><span class="n">data</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">readLine</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="n">in</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p>터미널을 통해 입력받을 땐 보통 아래처럼 쓴다:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+//BufferedReader in = new BufferedReader(new InputStreamReader(System.in, "utf-8"));
+</code></pre></div></div>
+
+<h2 id="printwriter">PrintWriter</h2>
+
+<p>PrintStream보다 향상된 문자기반 스트림이다. JDK1.1에 추가되었다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// PrintStream</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"hi"</span><span class="o">);</span> <span class="c1">//new PrintStream(System.out).println("hello world");</span>
+
+<span class="c1">// PrintWriter</span>
+<span class="nc">PrintWriter</span> <span class="n">pw</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PrintWriter</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">);</span>
+<span class="n">pw</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">"hi"</span><span class="o">);</span>
+<span class="n">pw</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
+<span class="n">pw</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</code></pre></div></div>
+:ET

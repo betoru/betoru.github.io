@@ -1,0 +1,106 @@
+I"�!<ul class="toc" id="markdown-toc">
+  <li><a href="#관련-문서" id="markdown-toc-관련-문서">관련 문서</a></li>
+  <li><a href="#주요-메서드" id="markdown-toc-주요-메서드">주요 메서드</a>    <ul>
+      <li><a href="#clone" id="markdown-toc-clone">clone()</a></li>
+      <li><a href="#equals-object-obj-" id="markdown-toc-equals-object-obj-">equals( Object obj )</a>        <ul>
+          <li><a href="#equals의-실제-코드" id="markdown-toc-equals의-실제-코드">equals의 실제 코드</a></li>
+        </ul>
+      </li>
+      <li><a href="#tostring" id="markdown-toc-tostring">toString()</a></li>
+      <li><a href="#notify-notifyall" id="markdown-toc-notify-notifyall">notify(), notifyAll()</a></li>
+      <li><a href="#finalize" id="markdown-toc-finalize">finalize()</a></li>
+      <li><a href="#getclass" id="markdown-toc-getclass">getClass()</a></li>
+      <li><a href="#hashcode" id="markdown-toc-hashcode">hashCode()</a></li>
+      <li><a href="#wait-long-timeout--int-nanos-" id="markdown-toc-wait-long-timeout--int-nanos-">wait( [long timeout] [, int nanos] )</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="관련-문서">관련 문서</h4>
+<ul>
+  <li><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html">http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html</a></li>
+  <li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">http://docs.oracle.com/javase/8/docs/api/java/lang/Object.html</a></li>
+</ul>
+
+<p>Object 클래스는 모든 클래스의 상속계층도 상 가장 위에 위치하는 조상클래스다. 자바 컴파일러는 아무것도 상속하지 않는 클래스를 컴파일 할 때 자동으로 Object 클래스를 상속받도록 한다.</p>
+
+<p>Object 클래스는 소유한 변수(=멤버변수)가 없고 11개의 메서드만 존재한다.</p>
+
+<h2 id="주요-메서드">주요 메서드</h2>
+
+<h3 id="clone">clone()</h3>
+
+<p>객체 자신의 복사본을 리턴한다. 이 메서드는 변수의 값을 단순 복사하기 때문에 참조값을 소유한 객체를 복사할 때는 주의해서 사용해야 한다. 또한 이 메서드를 사용할 경우 반드시 Cloneable 인터페이스를 implements 해야한다. 그렇지 않으면 CloneNotSupportedException이 발생한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LogicTest</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">CloneNotSupportedException</span> <span class="o">{</span>
+        <span class="nc">Doppelganger</span> <span class="n">c</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Doppelganger</span><span class="o">();</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">c</span><span class="o">.</span><span class="na">getAa</span><span class="o">());</span> <span class="c1">// 1234</span>
+
+        <span class="n">c</span><span class="o">.</span><span class="na">setAa</span><span class="o">(</span><span class="s">"asdasd"</span><span class="o">);</span>
+
+        <span class="nc">Doppelganger</span> <span class="n">cc</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Doppelganger</span><span class="o">)</span> <span class="n">c</span><span class="o">.</span><span class="na">clone</span><span class="o">();</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">cc</span><span class="o">.</span><span class="na">getAa</span><span class="o">());</span> <span class="c1">// asdasd</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Doppelganger</span> <span class="kd">implements</span> <span class="nc">Cloneable</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">aa</span> <span class="o">=</span> <span class="s">"1234"</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getAa</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">aa</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setAa</span><span class="o">(</span><span class="nc">String</span> <span class="n">aa</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">aa</span> <span class="o">=</span> <span class="n">aa</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">clone</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">CloneNotSupportedException</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="kd">super</span><span class="o">.</span><span class="na">clone</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="equals-object-obj-">equals( Object obj )</h3>
+
+<p>객체 자신과 obj가 같은 객체인지 불리언값으로 리턴. 참조값을 비교하므로 동등비교 연산자<code class="language-plaintext highlighter-rouge">==</code>와 결과가 같다.</p>
+
+<p>String의 <code class="language-plaintext highlighter-rouge">equals()</code> 는 String 클래스에서 오버라이드 된 메서드로 객체가 갖는 문자열 값을 비교하는 반면 이 메서드는 객체 자신의 참조값과 전달인자로 받는 객체의 참조값을 비교하는 차이가 있다.</p>
+
+<h4 id="equals의-실제-코드">equals의 실제 코드</h4>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">equals</span><span class="o">(</span><span class="nc">Object</span> <span class="n">obj</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="o">(</span><span class="k">this</span> <span class="o">==</span> <span class="n">obj</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="tostring">toString()</h3>
+
+<p>클래스명 + <code class="language-plaintext highlighter-rouge">@</code> + 해시코드를 16진수로 변환해 리턴한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="nc">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="nf">getClass</span><span class="o">().</span><span class="na">getName</span><span class="o">()</span> <span class="o">+</span> <span class="s">"@"</span> <span class="o">+</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">toHexString</span><span class="o">(</span><span class="n">hashCode</span><span class="o">());</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="notify-notifyall">notify(), notifyAll()</h3>
+
+<p>이 객체를 사용하려고 대기중엔 쓰레드를 하나 혹은 모두 재개한다.</p>
+
+<h3 id="finalize">finalize()</h3>
+
+<p>이 객체에 대한 참조가 더 이상 없다고 판단될 때(즉, 소멸될 때) 가비지 컬렉터에 의해 자동으로 호출되는 메서드</p>
+
+<h3 id="getclass">getClass()</h3>
+
+<p>Class 인스턴스를 리턴한다. 이 인스턴스는 객체 자신의 클래스 정보를 갖는다.</p>
+
+<h3 id="hashcode">hashCode()</h3>
+
+<p>객체 자신의 해시코드 리턴</p>
+
+<h3 id="wait-long-timeout--int-nanos-">wait( [long timeout] [, int nanos] )</h3>
+
+<p>쓰레드를 지정된 시간동안 기다리게 한다. timeout은 10^-3초, nanos는 10^-9초를 의미한다. 전달인자가 없으면 notify(), notifyAll()을 호출할 때까지 대기한다.</p>
+:ET

@@ -1,0 +1,72 @@
+I"� <ul class="toc" id="markdown-toc">
+  <li><a href="#참고한-글" id="markdown-toc-참고한-글">참고한 글</a></li>
+  <li><a href="#테스트-환경" id="markdown-toc-테스트-환경">테스트 환경</a></li>
+  <li><a href="#const" id="markdown-toc-const">const</a></li>
+  <li><a href="#let" id="markdown-toc-let">let</a></li>
+</ul>
+
+<h4 id="참고한-글">참고한 글</h4>
+<ul>
+  <li><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Statements/const">https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Statements/const</a></li>
+</ul>
+
+<h4 id="테스트-환경">테스트 환경</h4>
+<ul>
+  <li>파이어폭스 47.0</li>
+</ul>
+
+<h2 id="const">const</h2>
+<p>const는 자바스크립트 1.5 이후 버전에서 사용가능한 키워드로, 상수를 정의할 때 사용하며 var 키워드를 대체할 수 있다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const name1 = value1 [, name2 = value2 [, ... [, nameN = valueN]]];
+</code></pre></div></div>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">PI</span> <span class="o">=</span> <span class="mf">3.14</span><span class="p">;</span>
+</code></pre></div></div>
+<p>const는 전형적인 ‘상수’답게 선언 시점에 반드시 초기화되어야 하며 선언 이후의 할당은 무시되거나 에러를 발생시킨다.</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">ABC</span><span class="p">;</span> <span class="c1">// SyntaxError: missing = in const declaration, 초기화 필요함</span>
+
+<span class="kd">const</span> <span class="nx">PI</span> <span class="o">=</span> <span class="mf">3.14</span><span class="p">;</span> <span class="c1">// 정상적인 선언</span>
+<span class="kd">const</span> <span class="nx">PI</span> <span class="o">=</span> <span class="mf">3.14159265</span><span class="p">;</span> <span class="c1">// SyntaxError: redeclaration of const PI, 중복 선언 불가</span>
+<span class="nx">PI</span> <span class="o">=</span> <span class="mf">3.141592</span><span class="p">;</span> <span class="c1">// TypeError: invalid assignment to const `PI', 재할당 불가</span>
+<span class="kd">var</span> <span class="nx">PI</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="c1">// SyntaxError: redeclaration of const PI, 같은 이름의 변수 선언 불가</span>
+</code></pre></div></div>
+<p>const는 객체 선언에도 사용할 수 있으나 객체의 프로퍼티는 보호되지 않는다:</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">MY_OBJECT</span> <span class="o">=</span> <span class="p">{</span><span class="dl">"</span><span class="s2">key</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">value</span><span class="dl">"</span><span class="p">};</span>
+<span class="nx">MY_OBJECT</span> <span class="o">=</span> <span class="p">{</span><span class="dl">"</span><span class="s2">OTHER_KEY</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">value</span><span class="dl">"</span><span class="p">};</span> <span class="c1">// SyntaxError: redeclaration of const MY_OBJECT</span>
+<span class="nx">MY_OBJECT</span><span class="p">.</span><span class="nx">key</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">otherValue</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">debug</span><span class="p">(</span><span class="nx">MY_OBJECT</span><span class="p">);</span> <span class="c1">// Object { key: "otherValue" }</span>
+</code></pre></div></div>
+<p>객체를 완전히 보호하고 싶다면 <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze"><code class="language-plaintext highlighter-rouge">Object.freeze()</code></a>를 사용할 것.</p>
+
+<h2 id="let">let</h2>
+<p>let은 자바스크립트 1.7(ES2015)부터 신규 추가된 키워드다. const와 마찬가지로 var를 대체할 수 있다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let var1 [= value1] [, var2 [= value2]] [, ..., varN [= valueN]];
+</code></pre></div></div>
+<p>let은 자바스크립트의 변수가 갖는 함수 유효범위를 블록 유효범위로 제한하기 위해 사용한다.
+가령 다음의 경우:</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">fn</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">w</span> <span class="o">=</span> <span class="mi">102</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">debug</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span> <span class="c1">// 1</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">debug</span><span class="p">(</span><span class="nx">w</span><span class="p">);</span> <span class="c1">// 102</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">debug</span><span class="p">(</span><span class="nx">b</span><span class="p">);</span> <span class="c1">// ReferenceError: b is not defined</span>
+<span class="p">}</span>
+<span class="nx">fn</span><span class="p">();</span>
+</code></pre></div></div>
+<p>유효범위가 함수 단위인 var를 사용한 변수 <code class="language-plaintext highlighter-rouge">w</code>는 블록 밖에서도 참조 가능한 반면, let을 사용하여 선언된 변수는 해당 지역을 감싼 블록과 그 하위의 중첩 블록에서만 유효한 블록 단위의 유효범위를 갖기 때문에 블록을 벗어난 지역에서는 참조 에러가 발생한다.</p>
+
+<p>이를 활용하면 제어문의 표현식 내에서 생성된 변수의 유효범위를 해당 제어문 내로 제한할 수 있다. 예를 들어:</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">a</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">b</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">c</span><span class="dl">'</span><span class="p">];</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">ele1</span> <span class="k">in</span> <span class="nx">arr</span><span class="p">)</span> <span class="p">{}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">debug</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="nx">ele1</span><span class="p">]);</span> <span class="c1">// 'c'</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">ele2</span> <span class="k">in</span> <span class="nx">arr</span><span class="p">)</span> <span class="p">{}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">debug</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="nx">ele2</span><span class="p">]);</span> <span class="c1">// ReferenceError: ele2 is not defined</span>
+</code></pre></div></div>
+<p>let으로 선언된 <code class="language-plaintext highlighter-rouge">ele2</code>는 for문 밖에서 참조할 수 없다.</p>
+
+<p>IE는 11과 edge에서만 사용 가능 https://msdn.microsoft.com/en-us/library/s4esdbwz(v=vs.94).aspx</p>
+:ET

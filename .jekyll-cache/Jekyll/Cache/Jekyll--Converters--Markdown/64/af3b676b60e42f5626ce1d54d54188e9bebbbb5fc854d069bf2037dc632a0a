@@ -1,0 +1,151 @@
+I"�<ul class="toc" id="markdown-toc">
+  <li><a href="#rank-over-vs-row_number-over" id="markdown-toc-rank-over-vs-row_number-over">Rank Over VS Row_number Over</a>    <ul>
+      <li><a href="#rank-over" id="markdown-toc-rank-over">Rank Over()</a></li>
+      <li><a href="#row_number-over" id="markdown-toc-row_number-over">Row_number Over()</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="rank-over-vs-row_number-over">Rank Over VS Row_number Over</h2>
+
+<blockquote>
+  <p>어떤 SCORE 에 의해 데이터를 정렬해야 할 때 이 두 가지의 함수 중 적절한 함수를 쓰도록 한다.</p>
+</blockquote>
+
+<h4 id="rank-over">Rank Over()</h4>
+<p>기준 데이터를 정렬했을 때 동일한 값의 데이터는 동일한 정렬값을 부여하는 함수. 함수명 그대로 <code class="language-plaintext highlighter-rouge">RANK</code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>예
+SELECT NUM, NM, RANK () OVER (ORDER BY NUM DESC) RANK
+  FROM (SELECT 1 AS NUM, 'a1' NM FROM DUAL
+        UNION ALL
+        SELECT 2 AS NUM, 'a2' NM FROM DUAL
+        UNION ALL
+        SELECT 3 AS NUM, 'a3' NM FROM DUAL
+        UNION ALL
+        SELECT 4 AS NUM, 'a4' NM FROM DUAL
+        UNION ALL
+        SELECT 4 AS NUM, 'a5' NM FROM DUAL
+        UNION ALL
+        SELECT 4 AS NUM, 'a6' NM FROM DUAL
+        UNION ALL
+        SELECT 5 AS NUM, 'a7' NM FROM DUAL)
+ WHERE 1 = 1;
+</code></pre></div></div>
+<p><code class="language-plaintext highlighter-rouge">결과</code></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">NUM</th>
+      <th style="text-align: center">NM</th>
+      <th style="text-align: center">RANK</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">5</td>
+      <td style="text-align: center">a7</td>
+      <td style="text-align: center">1</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">4</td>
+      <td style="text-align: center">a4</td>
+      <td style="text-align: center">2</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">4</td>
+      <td style="text-align: center">a6</td>
+      <td style="text-align: center">2</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">4</td>
+      <td style="text-align: center">a5</td>
+      <td style="text-align: center">2</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">3</td>
+      <td style="text-align: center">a3</td>
+      <td style="text-align: center">5</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2</td>
+      <td style="text-align: center">a2</td>
+      <td style="text-align: center">6</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">a1</td>
+      <td style="text-align: center">7</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="row_number-over">Row_number Over()</h4>
+<p>기준 데이터를 정렬했을 때 동일한 값의 데이터와 상관없이 기준 데이터값을 정렬하여 순차적으로 정렬값을 부여한 함수</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SELECT NUM, NM, ROW_NUMBER () OVER (ORDER BY NUM DESC) RANK
+  FROM (SELECT 1 AS NUM, 'a1' NM FROM DUAL
+        UNION ALL
+        SELECT 2 AS NUM, 'a2' NM FROM DUAL
+        UNION ALL
+        SELECT 3 AS NUM, 'a3' NM FROM DUAL
+        UNION ALL
+        SELECT 4 AS NUM, 'a4' NM FROM DUAL
+        UNION ALL
+        SELECT 4 AS NUM, 'a5' NM FROM DUAL
+        UNION ALL
+        SELECT 4 AS NUM, 'a6' NM FROM DUAL
+        UNION ALL
+        SELECT 5 AS NUM, 'a7' NM FROM DUAL)
+ WHERE 1 = 1;
+
+</code></pre></div></div>
+<p><code class="language-plaintext highlighter-rouge">결과</code></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">NUM</th>
+      <th style="text-align: center">NM</th>
+      <th style="text-align: center">RANK</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">5</td>
+      <td style="text-align: center">a7</td>
+      <td style="text-align: center">1</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">4</td>
+      <td style="text-align: center">a4</td>
+      <td style="text-align: center">2</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">4</td>
+      <td style="text-align: center">a6</td>
+      <td style="text-align: center">3</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">4</td>
+      <td style="text-align: center">a5</td>
+      <td style="text-align: center">4</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">3</td>
+      <td style="text-align: center">a3</td>
+      <td style="text-align: center">5</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2</td>
+      <td style="text-align: center">a2</td>
+      <td style="text-align: center">6</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">a1</td>
+      <td style="text-align: center">7</td>
+    </tr>
+  </tbody>
+</table>
+:ET

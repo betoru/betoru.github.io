@@ -1,0 +1,211 @@
+I"�B<ul class="toc" id="markdown-toc">
+  <li><a href="#조건문" id="markdown-toc-조건문">조건문</a>    <ul>
+      <li><a href="#if-then-else" id="markdown-toc-if-then-else">if-then-else</a></li>
+      <li><a href="#switch-case" id="markdown-toc-switch-case">switch-case</a></li>
+    </ul>
+  </li>
+  <li><a href="#반복문" id="markdown-toc-반복문">반복문</a>    <ul>
+      <li><a href="#for-loop" id="markdown-toc-for-loop">for loop</a></li>
+      <li><a href="#향상된-for문-enhanced-for-loop-statement" id="markdown-toc-향상된-for문-enhanced-for-loop-statement">향상된 for문 enhanced for loop statement</a></li>
+      <li><a href="#while" id="markdown-toc-while">while</a></li>
+      <li><a href="#dowhile" id="markdown-toc-dowhile">do…while</a></li>
+    </ul>
+  </li>
+  <li><a href="#점프문" id="markdown-toc-점프문">점프문</a>    <ul>
+      <li><a href="#break" id="markdown-toc-break">break</a></li>
+      <li><a href="#continue" id="markdown-toc-continue">continue</a></li>
+      <li><a href="#label" id="markdown-toc-label">label</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="조건문">조건문</h2>
+
+<p>조건문은 조건을 제시한 뒤 만족하거나 불만족할 때의 분기를 제어한다. 조건식은 반드시 boolean으로 평가되는 표현식이어야 한다.</p>
+
+<h3 id="if-then-else">if-then-else</h3>
+
+<p><code class="language-plaintext highlighter-rouge">if</code> ~ <code class="language-plaintext highlighter-rouge">else if</code> ~ <code class="language-plaintext highlighter-rouge">else</code> 구간 중 만족하는 조건이 있다면 블록을 실행하고 if문을 끝낸다. if문 안에 if문을 또 작성할 수 있다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if (조건식) {
+   실행문
+} else if (조건식) {
+     실행문
+} else {
+     실행문
+}
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">String</span> <span class="n">str</span> <span class="o">=</span> <span class="s">"hello"</span><span class="o">;</span>
+<span class="k">if</span> <span class="o">(</span><span class="s">"hello"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">str</span><span class="o">))</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">str</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">==</span> <span class="mi">5</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"is 'hello'"</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">str</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"something wrong"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"is not 'hello'"</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="switch-case">switch-case</h3>
+
+<p>조건 1개로 제어 분기. 단, 조건은 int로 변환 가능한 타입과 String(JDK1.7 이상부터), enum 변수만 가능하다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>switch (조건) {
+case 값1:  // label
+    실행문;
+    break;
+case 값2:  
+    실행문;
+    break;
+default: // if문의 else와 같다. 위에 열거된 case에 모두 해당되지 않으면 실행
+    실행문;
+    break;
+}
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">char</span> <span class="n">character</span> <span class="o">=</span> <span class="sc">'A'</span><span class="o">;</span>
+<span class="k">switch</span> <span class="o">(</span><span class="n">character</span><span class="o">)</span> <span class="o">{</span>
+<span class="k">case</span> <span class="sc">'A'</span><span class="o">:</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"A"</span><span class="o">);</span>
+<span class="k">case</span> <span class="sc">'B'</span><span class="o">:</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"B"</span><span class="o">);</span>
+    <span class="k">break</span><span class="o">;</span>
+<span class="o">}</span> <span class="c1">// case 'A'에 break가 없어서 case 'B'도 같이 실행된다.</span>
+</code></pre></div></div>
+
+<h2 id="반복문">반복문</h2>
+
+<h3 id="for-loop">for loop</h3>
+
+<p>특정 실행 코드 블록을 원하는 횟수만큼 반복 제어</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for (초기식; 조건식; 증감식;) { // 조건식이 TRUE일 때 실행문을 반복한다.
+    실행문
+}
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes</span> <span class="o">=</span> <span class="s">"한글나라"</span><span class="o">.</span><span class="na">getBytes</span><span class="o">();</span>
+<span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">bytes</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">bytes</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="o">(;;)</span> <span class="o">{</span>
+    <span class="c1">// some...one?</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>이렇게 하면 무한루프가 된다.</p>
+
+<h3 id="향상된-for문-enhanced-for-loop-statement">향상된 for문 enhanced for loop statement</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for (variable ele : locationEle) { // locationEle : 배열 또는 컬렉션
+    실행문
+}
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span><span class="o">[]</span> <span class="n">n</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span> <span class="o">{</span><span class="mi">40</span><span class="o">,</span> <span class="mi">20</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">30</span><span class="o">,</span> <span class="mi">60</span><span class="o">,</span> <span class="mi">35</span><span class="o">,</span> <span class="mi">41</span><span class="o">,</span> <span class="mi">23</span><span class="o">,</span> <span class="mi">78</span><span class="o">}</span> <span class="o">;</span>
+
+<span class="c1">// n의 배열 길이만큼 루프를 돌되 각 사이클마다 i에 n의 요소를 할당한다.</span>
+<span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">:</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>다음처럼 배열이나 컬렉션을 인라인으로 선언하여 사용하기도 한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="o">(</span><span class="nc">String</span> <span class="n">i</span> <span class="o">:</span> <span class="k">new</span> <span class="nc">String</span><span class="o">[]</span> <span class="o">{</span> <span class="s">"+"</span><span class="o">,</span> <span class="s">"-"</span><span class="o">,</span> <span class="s">"*"</span><span class="o">,</span> <span class="s">"/"</span> <span class="o">})</span> <span class="o">{</span>
+    <span class="c1">// ...</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="while">while</h3>
+
+<p>조건식이 TRUE면 실행문을 반복한다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>while (조건식) {
+    실행문
+}
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="c1">//초기식</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">11</span><span class="o">)</span> <span class="o">{</span> <span class="c1">//조건식</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">n</span><span class="o">);</span>
+    <span class="o">++</span><span class="n">n</span><span class="o">;</span> <span class="c1">//증감식</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>아래는 무한루프에서 탈출 분기를 설정하는 방법.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>while (true) {
+    ...
+
+    if (.....) {
+        break;
+    }
+}
+</code></pre></div></div>
+
+<h3 id="dowhile">do…while</h3>
+
+<p>while과 비슷하지만 실행문을 우선 실행 후 조건식을 평가한다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>do {
+  실행문
+} while (조건식);
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+<span class="k">do</span> <span class="o">{</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">n</span><span class="o">);</span>
+    <span class="o">++</span><span class="n">n</span><span class="o">;</span>
+<span class="o">}</span> <span class="k">while</span> <span class="o">(</span><span class="n">n</span><span class="o">&lt;=</span><span class="mi">10</span><span class="o">);</span>
+</code></pre></div></div>
+
+<h2 id="점프문">점프문</h2>
+
+<h3 id="break">break</h3>
+
+<p>현재 위치에서 가장 가까운 switch 혹은 반복문을 탈출(중단)한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">11</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">5</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">break</span><span class="o">;</span>  
+    <span class="o">}</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+<span class="o">}</span>    <span class="c1">//1,2,3,4</span>
+</code></pre></div></div>
+
+<h3 id="continue">continue</h3>
+
+<p>현재 자신이 속한 반복문 처음으로 되돌아간다. 증감식이 존재하면 한 번 수행한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">11</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">5</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">continue</span><span class="o">;</span>  
+    <span class="o">}</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="c1">// 1,2,3,4,6,7,8,9,10</span>
+</code></pre></div></div>
+
+<h3 id="label">label</h3>
+
+<p>반복문에 이름을 부여하고 지칭하는 반복문을 바로 탈출하거나 되돌아간다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// for문에 Loop1 이라는 이름을 지정</span>
+<span class="nl">Loop1:</span> <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">9</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="mi">9</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">j</span> <span class="o">==</span> <span class="mi">5</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">break</span> <span class="nc">Loop1</span><span class="o">;</span>    <span class="c1">// Loop1 탈출</span>
+            <span class="c1">//break;        // for j 탈출</span>
+            <span class="c1">//continue Loop1;    // Loop1의 다음 루프로 이동</span>
+            <span class="c1">//continue;        // for j 의 다음 루프로 이동</span>
+        <span class="o">}</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="s">"*"</span> <span class="o">+</span> <span class="n">j</span> <span class="o">+</span> <span class="s">"="</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">j</span><span class="o">);</span>
+    <span class="o">}</span> <span class="c1">// end of for j</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+<span class="o">}</span> <span class="c1">// end of Loop1</span>
+</code></pre></div></div>
+:ET

@@ -1,0 +1,215 @@
+I"�H<ul class="toc" id="markdown-toc">
+  <li><a href="#관련-문서" id="markdown-toc-관련-문서">관련 문서</a></li>
+  <li><a href="#enum" id="markdown-toc-enum">enum</a></li>
+  <li><a href="#name과-tostring의-차이" id="markdown-toc-name과-tostring의-차이">name()과 toString()의 차이</a></li>
+  <li><a href="#enum-constructor" id="markdown-toc-enum-constructor">enum constructor</a></li>
+</ul>
+
+<h4 id="관련-문서">관련 문서</h4>
+<ul>
+  <li><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Enum.html">https://docs.oracle.com/javase/8/docs/api/java/lang/Enum.html</a></li>
+  <li><a href="https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html">https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html</a></li>
+  <li><a href="http://iilii.egloos.com/4343065/">http://iilii.egloos.com/4343065/</a></li>
+  <li><a href="https://bluepoet.me/2012/07/18/번역자바-enum의-10가지-예제/">https://bluepoet.me/2012/07/18/번역자바-enum의-10가지-예제/</a></li>
+</ul>
+
+<h2 id="enum">enum</h2>
+
+<p>enum은 자바 1.5부터 추가된 자료형이다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>enum ClassName {
+    상수1, 상수2, ...
+}
+</code></pre></div></div>
+
+<p>enum은 ‘일반적으로’ 상수만을 갖는 타입이며, 흔히들 사용하는 <code class="language-plaintext highlighter-rouge">public static final</code> 상수와 비교했을 때 type-safety(런타임 예외 발생 방지)를 보장하는 장점이 있다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">enum</span> <span class="nc">City</span> <span class="o">{</span>
+    <span class="n">서울</span><span class="o">,</span> <span class="n">인천</span><span class="o">,</span> <span class="n">부산</span>
+<span class="o">}</span>
+
+<span class="kd">enum</span> <span class="nc">Color</span> <span class="o">{</span>
+    <span class="no">RED</span><span class="o">,</span> <span class="no">BLUE</span><span class="o">,</span> <span class="no">GREEN</span><span class="o">,</span> <span class="no">YELLOW</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">EnumTest</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">City</span> <span class="n">c1</span><span class="o">;</span> <span class="c1">// 열거형 변수 선언</span>
+        <span class="n">c1</span> <span class="o">=</span> <span class="nc">City</span><span class="o">.</span><span class="na">서울</span><span class="o">;</span> <span class="c1">// 열거형 상수 대입</span>
+
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">c1</span><span class="o">);</span> <span class="c1">// → 서울</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="nc">City</span><span class="o">.</span><span class="na">인천</span><span class="o">);</span> <span class="c1">// → 인천</span>
+
+        <span class="nc">City</span> <span class="n">c2</span> <span class="o">=</span> <span class="nc">City</span><span class="o">.</span><span class="na">대구</span><span class="o">;</span> <span class="c1">// compile error: 대구 cannot be resolved or is not a field</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>enum은 내부적으로 int 타입으로 처리된다. 즉 swith문의 조건으로 사용할 수 있다:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">enum</span> <span class="nc">Color</span> <span class="o">{</span>
+    <span class="no">RED</span><span class="o">,</span> <span class="no">BLUE</span><span class="o">,</span> <span class="no">GREEN</span><span class="o">,</span> <span class="no">YELLOW</span>
+    <span class="c1">//1,   2,    3,      4</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">EnumTest</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Color</span> <span class="n">c</span> <span class="o">=</span> <span class="nc">Color</span><span class="o">.</span><span class="na">RED</span><span class="o">;</span>
+
+        <span class="k">switch</span> <span class="o">(</span><span class="n">c</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">case</span> <span class="nl">RED:</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"빨간색 옷을 선택함"</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+        <span class="k">case</span> <span class="nl">YELLOW:</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"노란색 옷을 선택함"</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="name과-tostring의-차이">name()과 toString()의 차이</h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">enum</span> <span class="nc">Color</span> <span class="o">{</span>
+	<span class="no">RED</span><span class="o">,</span> <span class="no">BLUE</span><span class="o">,</span> <span class="no">GREEN</span><span class="o">,</span> <span class="no">YELLOW</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">EnumTest</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="nc">Color</span><span class="o">.</span><span class="na">RED</span><span class="o">);</span> <span class="c1">// RED</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="nc">Color</span><span class="o">.</span><span class="na">RED</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span> <span class="c1">// RED</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="nc">Color</span><span class="o">.</span><span class="na">RED</span><span class="o">.</span><span class="na">name</span><span class="o">());</span> <span class="c1">// RED</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>enum의 메서드인 <code class="language-plaintext highlighter-rouge">name()</code>과 <code class="language-plaintext highlighter-rouge">toString()</code>은 상수로 정의된 자기 자신의 이름을 그대로 반환한다. 참고로 enum의 추상 클래스인 <code class="language-plaintext highlighter-rouge">Enum&lt;Enum&lt;E&gt;&gt;</code>의 실제 소스는 아래와 같다:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Enum</span><span class="o">&lt;</span><span class="no">E</span> <span class="kd">extends</span> <span class="nc">Enum</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;&gt;</span>
+        <span class="kd">implements</span> <span class="nc">Comparable</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;,</span> <span class="nc">Serializable</span> <span class="o">{</span>
+    <span class="cm">/**
+     * The name of this enum constant, as declared in the enum declaration.
+     * Most programmers should use the {@link #toString} method rather than
+     * accessing this field.
+     */</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+
+    <span class="cm">/**
+     * Returns the name of this enum constant, exactly as declared in its
+     * enum declaration.
+     *
+     * Most programmers should use the {@link #toString} method in
+     * preference to this one, as the toString method may return
+     * a more user-friendly name.  This method is designed primarily for
+     * use in specialized situations where correctness depends on getting the
+     * exact name, which will not vary from release to release.
+     *
+     * @return the name of this enum constant
+     */</span>
+    <span class="kd">public</span> <span class="kd">final</span> <span class="nc">String</span> <span class="nf">name</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * Returns the name of this enum constant, as contained in the
+     * declaration.  This method may be overridden, though it typically
+     * isn't necessary or desirable.  An enum type should override this
+     * method when a more "programmer-friendly" string form exists.
+     *
+     * @return the name of this enum constant
+     */</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="enum-constructor">enum constructor</h2>
+
+<p>앞서 enum을 ‘일반적으로’ 상수만을 갖는 타입이라 했지만 사실 보통의 클래스처럼 생성자와 메서드, 변수도 소유한다. 메서드와 변수는 특이하게도 상수를 경유한 접근방식을 사용하며 생성자는 오직 private 접근 제한자만 허용한다. 만약 private 외의 접근 제한자를 명시하면 컴파일 에러가 발생할 것이다.<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup></p>
+
+<p>다음은 파라미터가 있는 생성자를 구현한 예시인데, 이 방법으로 상수를 단순 나열이나 비교하는 용도 외에 추가적인 의미를 지닌 값으로 활용할 수 있다. 가령 사과 종류별 가격이라던지…</p>
+
+<p><a href="http://www.java2s.com/Code/Java/Language-Basics/Useanenumconstructorinstancevariableandmethod.htm">소스 출처</a></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">enum</span> <span class="nc">Apple</span> <span class="o">{</span>
+    <span class="no">A</span><span class="o">(</span><span class="mi">10</span><span class="o">),</span> <span class="no">B</span><span class="o">(</span><span class="mi">9</span><span class="o">),</span> <span class="no">C</span><span class="o">(</span><span class="mi">12</span><span class="o">),</span> <span class="no">D</span><span class="o">(</span><span class="mi">15</span><span class="o">),</span> <span class="no">E</span><span class="o">(</span><span class="mi">8</span><span class="o">);</span>
+
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">price</span><span class="o">;</span> <span class="c1">// price of each apple</span>
+
+    <span class="c1">// Constructor</span>
+    <span class="kd">private</span> <span class="nf">Apple</span><span class="o">(</span><span class="kt">int</span> <span class="n">p</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">price</span> <span class="o">=</span> <span class="n">p</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getPrice</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">price</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">EnumDemo3</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+        <span class="c1">// Display price of Winsap.</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="nc">Apple</span><span class="o">.</span><span class="na">A</span><span class="o">.</span><span class="na">getPrice</span><span class="o">());</span>
+
+        <span class="c1">// Display all apples and prices.</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"All apple prices:"</span><span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="nc">Apple</span> <span class="n">ele</span> <span class="o">:</span> <span class="nc">Apple</span><span class="o">.</span><span class="na">values</span><span class="o">())</span> <span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">ele</span> <span class="o">+</span> <span class="s">" costs "</span> <span class="o">+</span> <span class="n">ele</span><span class="o">.</span><span class="na">getPrice</span><span class="o">()</span> <span class="o">+</span> <span class="s">" cents."</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>다음은 실적용 사례인 <code class="language-plaintext highlighter-rouge">net.sf.uadetector.OperatingSystemFamily</code>의 일부:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="nc">OperatingSystemFamily</span> <span class="o">{</span>
+
+    <span class="no">ANDROID</span><span class="o">(</span><span class="s">"Android"</span><span class="o">,</span> <span class="nc">Pattern</span><span class="o">.</span><span class="na">compile</span><span class="o">(</span><span class="s">"Android"</span><span class="o">)),</span>
+
+    <span class="c1">// 생략</span>
+
+    <span class="cm">/**
+     * The internal family name in the UAS database.
+     */</span>
+    <span class="nd">@Nonnull</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+
+    <span class="cm">/**
+     * The regular expression which a family name must be match.
+     */</span>
+    <span class="nd">@Nonnull</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">Pattern</span> <span class="n">pattern</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="nf">OperatingSystemFamily</span><span class="o">(</span><span class="nd">@Nonnull</span> <span class="kd">final</span> <span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nd">@Nonnull</span> <span class="kd">final</span> <span class="nc">Pattern</span> <span class="n">pattern</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">pattern</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * Gets the internal family name in the UAS database.
+     *
+     * @return the internal family name
+     */</span>
+    <span class="nd">@Nonnull</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">name</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * Gets the regular expression which a family name must be match with.
+     *
+     * @return regular expression
+     */</span>
+    <span class="nd">@Nonnull</span>
+    <span class="kd">public</span> <span class="nc">Pattern</span> <span class="nf">getPattern</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">pattern</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>Illegal modifier for the enum constructor; only private is permitted. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+:ET

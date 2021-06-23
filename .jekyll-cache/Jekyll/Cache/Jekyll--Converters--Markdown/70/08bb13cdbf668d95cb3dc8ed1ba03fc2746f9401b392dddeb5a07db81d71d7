@@ -1,0 +1,226 @@
+I"�.<ul class="toc" id="markdown-toc">
+  <li><a href="#용어" id="markdown-toc-용어">용어</a></li>
+  <li><a href="#연산자의-종류" id="markdown-toc-연산자의-종류">연산자의 종류</a></li>
+  <li><a href="#연산자-우선순위" id="markdown-toc-연산자-우선순위">연산자 우선순위</a></li>
+  <li><a href="#단항-연산자--" id="markdown-toc-단항-연산자--">단항 연산자 ++ –</a></li>
+  <li><a href="#논리-부정-연산자-" id="markdown-toc-논리-부정-연산자-">논리 부정 연산자 !</a></li>
+  <li><a href="#비트-전환-연산자-" id="markdown-toc-비트-전환-연산자-">비트 전환 연산자 ~</a></li>
+  <li><a href="#비트-시프트-연산자-" id="markdown-toc-비트-시프트-연산자-">비트 시프트 연산자 « »</a></li>
+  <li><a href="#비트-연산자---" id="markdown-toc-비트-연산자---">비트 연산자 | &amp; ^</a></li>
+</ul>
+
+<h4 id="용어">용어</h4>
+
+<ul>
+  <li>연산자(Operator): 어떠한 기능을 수행하는 기호</li>
+  <li>피연산자(Operand): 연산자의 작업 대상</li>
+</ul>
+
+<h2 id="연산자의-종류">연산자의 종류</h2>
+
+<ul>
+  <li>단항 연산자: <code class="language-plaintext highlighter-rouge">+</code>, <code class="language-plaintext highlighter-rouge">-</code>, <code class="language-plaintext highlighter-rouge">(type)</code>, <code class="language-plaintext highlighter-rouge">++</code>, <code class="language-plaintext highlighter-rouge">--</code>, <code class="language-plaintext highlighter-rouge">~</code>, <code class="language-plaintext highlighter-rouge">!</code></li>
+  <li>이항 산술 연산자: <code class="language-plaintext highlighter-rouge">+</code>, <code class="language-plaintext highlighter-rouge">-</code>, <code class="language-plaintext highlighter-rouge">*</code>, <code class="language-plaintext highlighter-rouge">/</code>, <code class="language-plaintext highlighter-rouge">%</code>, <code class="language-plaintext highlighter-rouge">&lt;&lt;</code>, <code class="language-plaintext highlighter-rouge">&gt;&gt;</code>, <code class="language-plaintext highlighter-rouge">&gt;&gt;&gt;</code></li>
+  <li>이항 비교 연산자: <code class="language-plaintext highlighter-rouge">&gt;</code>, <code class="language-plaintext highlighter-rouge">&lt;</code>, <code class="language-plaintext highlighter-rouge">&gt;=</code>, <code class="language-plaintext highlighter-rouge">&lt;=</code>, <code class="language-plaintext highlighter-rouge">==</code>, <code class="language-plaintext highlighter-rouge">!=</code></li>
+  <li>이항 논리 연산자: <code class="language-plaintext highlighter-rouge">&amp;&amp;</code>, <code class="language-plaintext highlighter-rouge">||</code>, <code class="language-plaintext highlighter-rouge">&amp;</code>, <code class="language-plaintext highlighter-rouge">^</code>, <code class="language-plaintext highlighter-rouge">|</code></li>
+  <li>삼항 연산자: <code class="language-plaintext highlighter-rouge">? :</code></li>
+  <li>대입 연산자: <code class="language-plaintext highlighter-rouge">=</code>, <code class="language-plaintext highlighter-rouge">operator=</code></li>
+</ul>
+
+<h2 id="연산자-우선순위">연산자 우선순위</h2>
+
+<ul>
+  <li>괄호의 우선순위가 가장 높음</li>
+  <li>산술 &gt; 비교 &gt; 논리 &gt; 대입</li>
+  <li>단항 &gt; 이항 &gt; 삼항</li>
+  <li>연산자의 연산 진행방향은 왼쪽에서 오른쪽</li>
+  <li>단항, 대입 연산자는 오른쪽에서 왼쪽</li>
+</ul>
+
+<p><img src="/images/java-operator-1.png" alt="" /></p>
+
+<h2 id="단항-연산자--">단항 연산자 ++ –</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">++</code>: 증가 연산자. 피연산자의 값 +1</li>
+  <li><code class="language-plaintext highlighter-rouge">--</code>: 감소 연산자. 피연산자의 값 -1</li>
+</ul>
+
+<p>연산자의 위치에 따라 연산 우선순위가 바뀌게 되니 주의할 것.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+
+<span class="kt">int</span> <span class="n">value</span> <span class="o">=</span> <span class="n">n</span><span class="o">++;</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">value</span><span class="o">);</span> <span class="c1">//1</span>
+
+<span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+<span class="kt">int</span> <span class="n">value</span> <span class="o">=</span> <span class="o">++</span><span class="n">n</span><span class="o">;</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">value</span><span class="o">);</span> <span class="c1">//2</span>
+</code></pre></div></div>
+
+<h2 id="논리-부정-연산자-">논리 부정 연산자 !</h2>
+
+<p>불리언 타입의 피연산자를 반대로 바꾼다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">boolean</span> <span class="n">flag</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+<span class="n">flag</span> <span class="o">=</span> <span class="o">!</span><span class="n">flag</span><span class="o">;</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">flag</span><span class="o">);</span>
+
+<span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">n</span> <span class="o">!=</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"1이 아니네?"</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="o">-&gt;</span> <span class="kc">false</span>
+<span class="o">-&gt;</span> <span class="mi">1</span><span class="n">이</span> <span class="n">아니네</span><span class="o">?</span>
+</code></pre></div></div>
+
+<h2 id="비트-전환-연산자-">비트 전환 연산자 ~</h2>
+
+<p>정수를 2진수로 표현했을 때, 1을 0으로 0은 1로 바꾼다. 정수형에서만 사용가능</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>2진수</th>
+      <th>10진수</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>00001010</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <td>11110101</td>
+      <td>-11</td>
+    </tr>
+    <tr>
+      <td>11110101<br />00000001</td>
+      <td>-11<br />+) 1</td>
+    </tr>
+    <tr>
+      <td>11110110</td>
+      <td>-10</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">binary</span> <span class="o">=</span> <span class="mb">0b1111</span><span class="o">;</span> <span class="c1">// 15, 2진수 리터럴(b)</span>
+<span class="kt">int</span> <span class="n">octal</span> <span class="o">=</span> <span class="mo">011</span><span class="o">;</span> <span class="c1">// 9, 8진수 리터럴</span>
+<span class="kt">int</span> <span class="n">hexaDecimal</span> <span class="o">=</span> <span class="mh">0xE</span><span class="o">;</span> <span class="c1">// 14, 16진수 리터럴(x)</span>
+
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(~</span><span class="n">binary</span><span class="o">);</span> <span class="c1">// -16</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(~</span><span class="n">octal</span><span class="o">);</span> <span class="c1">// -10</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(~</span><span class="n">hexaDecimal</span><span class="o">);</span> <span class="c1">// -15</span>
+
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(~</span><span class="mi">100</span><span class="o">);</span> <span class="c1">// -101</span>
+</code></pre></div></div>
+
+<h2 id="비트-시프트-연산자-">비트 시프트 연산자 « »</h2>
+
+<p>x의 비트를 n 만큼 이동시킨다. 2n 으로 곱하거나 나눈 결과와 같으며 곱셈, 나눗셈보다 연산속도가 빠르다.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">x &lt;&lt; n</code>: (x * 2ⁿ과 같음)</li>
+  <li><code class="language-plaintext highlighter-rouge">x &gt;&gt; n</code>: (x / 2ⁿ과 같음)</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="mi">8</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="o">);</span> <span class="c1">// 8 * (2 ^ 2) = 32</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="mi">8</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="o">);</span> <span class="c1">// 8 / (2 ^ 2) = 2</span>
+</code></pre></div></div>
+
+<h2 id="비트-연산자---">비트 연산자 | &amp; ^</h2>
+
+<p>피연산자를 비트단위로 연산한다. 실수형을 제외한 모든 기본형에 사용가능</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">|</code>: OR 연산자. 피연산자 중 어느 한 쪽이 1이면 1</li>
+  <li><code class="language-plaintext highlighter-rouge">&amp;</code>: AND 연산자. 피연산자 양 쪽 모두 1이면 1</li>
+  <li><code class="language-plaintext highlighter-rouge">^</code>: XOR 연산자. 피연산자가 서로 다를 때 1</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>x</th>
+      <th>y</th>
+      <th>x | y</th>
+      <th>x &amp; y</th>
+      <th>x ^ y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>식</th>
+      <th>2진수</th>
+      <th>10진수</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>3 | 5 = 7</td>
+      <td>00000011<br />00000101</td>
+      <td>3<br />5</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>00000111</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <td>3 &amp; 5 = 1</td>
+      <td>00000011<br />00000101</td>
+      <td>3<br />5</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>00000001</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>3 ^ 5 = 6</td>
+      <td>00000011<br />00000101</td>
+      <td>3<br />5</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>00000110</td>
+      <td>6</td>
+    </tr>
+  </tbody>
+</table>
+:ET

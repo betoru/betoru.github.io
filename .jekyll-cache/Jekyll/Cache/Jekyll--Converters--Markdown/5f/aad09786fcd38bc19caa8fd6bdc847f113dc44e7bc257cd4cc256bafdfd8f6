@@ -1,0 +1,173 @@
+I"�D<ul class="toc" id="markdown-toc">
+  <li><a href="#관련-문서" id="markdown-toc-관련-문서">관련 문서</a></li>
+  <li><a href="#제네릭-클래스" id="markdown-toc-제네릭-클래스">제네릭 클래스</a>    <ul>
+      <li><a href="#선언" id="markdown-toc-선언">선언</a></li>
+      <li><a href="#초기화" id="markdown-toc-초기화">초기화</a></li>
+    </ul>
+  </li>
+  <li><a href="#제네릭-메서드" id="markdown-toc-제네릭-메서드">제네릭 메서드</a></li>
+  <li><a href="#타입-제한" id="markdown-toc-타입-제한">타입 제한</a></li>
+</ul>
+
+<h4 id="관련-문서">관련 문서</h4>
+<ul>
+  <li><a href="https://docs.oracle.com/javase/tutorial/java/generics/index.html">https://docs.oracle.com/javase/tutorial/java/generics/index.html</a></li>
+</ul>
+
+<p>제네릭이란 클래스 혹은 메서드 내부에서 사용될 데이터 타입을 외부에서 지정하는 기법, 혹은 이러한 기법을 구현한 클래스와 메서드를 의미한다. 제네릭 클래스나 제네릭 메서드에선 제네릭 변수(혹은 <code class="language-plaintext highlighter-rouge">Type</code> 변수)를 사용하는데, 제네릭 변수의 데이터 타입은 컴파일 시점에 결정된다.</p>
+
+<p>대표적인 제네릭 클래스로는 <code class="language-plaintext highlighter-rouge">Class</code> 클래스와 <code class="language-plaintext highlighter-rouge">List</code>, <code class="language-plaintext highlighter-rouge">Map</code>이 있다.</p>
+
+<h2 id="제네릭-클래스">제네릭 클래스</h2>
+
+<h3 id="선언">선언</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class Generic&lt;T&gt; {
+    public T num;
+    public T num2;
+}
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 유형 1</span>
+<span class="kd">class</span> <span class="nc">Gen1</span><span class="o">&lt;</span><span class="nc">Type</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nc">Type</span> <span class="n">a</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// 유형 2</span>
+<span class="kd">class</span> <span class="nc">Gen2</span><span class="o">&lt;</span><span class="nc">Type</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nc">Type</span> <span class="n">a</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nc">Type</span> <span class="n">b</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nc">Type</span> <span class="n">c</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// 유형 3</span>
+<span class="kd">class</span> <span class="nc">Gen3</span><span class="o">&lt;</span><span class="nc">Type1</span><span class="o">,</span> <span class="nc">Type2</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nc">Type1</span> <span class="n">a</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nc">Type2</span> <span class="n">b</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>오직 인스턴스 변수만이 제네릭 타입으로 선언될 수 있으며 스태틱이나 파이널 키워드는 사용할 수 없다:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="no">T</span> <span class="n">num</span><span class="o">;</span> <span class="c1">// Cannot make a static reference to the non-static type T</span>
+<span class="kd">public</span> <span class="kd">final</span> <span class="no">T</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="c1">// Type mismatch: cannot convert from int to T</span>
+<span class="kd">public</span> <span class="kd">final</span> <span class="kd">static</span> <span class="no">T</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="c1">// Cannot make a static reference to the non-static type T</span>
+</code></pre></div></div>
+
+<h3 id="초기화">초기화</h3>
+
+<p>데이터 타입을 명시하면서 인스턴스를 생성한다:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Gen</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">intGen</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Gen</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;();</span>
+<span class="nc">Gen</span><span class="o">&lt;</span><span class="nc">Object</span><span class="o">&gt;</span> <span class="n">obGen</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Gen</span><span class="o">&lt;</span><span class="nc">Object</span><span class="o">&gt;();</span>
+</code></pre></div></div>
+
+<p>다음은 생성자로 참조값을 전달하고 그 값을 다시 가져오는 클래스를 구현한 예다:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">GenericExample</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="no">T</span> <span class="n">parameter</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">GenericExample</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">//제네릭 클래스의 기본생성자</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nf">GenericExample</span><span class="o">(</span><span class="no">T</span> <span class="n">parameter</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">parameter</span> <span class="o">=</span> <span class="n">parameter</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="no">T</span> <span class="nf">getParameter</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">parameter</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="nc">GenericExample</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">strGen</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">GenericExample</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;(</span><span class="s">"ㅎㅇ"</span><span class="o">);</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">strGen</span><span class="o">.</span><span class="na">getParameter</span><span class="o">());</span>
+<span class="err">→</span> <span class="n">ㅎㅇ</span>
+
+<span class="nc">GenericExample</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">intGen</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">GenericExample</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;(</span><span class="mi">12</span><span class="o">);</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">intGen</span><span class="o">.</span><span class="na">getParameter</span><span class="o">());</span>
+<span class="err">→</span> <span class="mi">12</span>
+</code></pre></div></div>
+
+<p>제네릭 변수의 데이터 타입을 알 수 없기 때문에 내부에서 일반적인 연산은 불가능하다:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="no">T</span> <span class="nf">getData</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">parameter</span> <span class="o">+</span> <span class="n">parameter</span><span class="o">;</span>
+    <span class="c1">// The operator + is undefined for the argument type(s) T, T</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="제네릭-메서드">제네릭 메서드</h2>
+
+<p>제네릭 메서드는 매개변수의 타입을 제네릭 변수로 선언한 메서드를 말한다. 하나 이상의 타입에 대응하는 메서드를 작성해야 할 때 사용한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GenericExample</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">getType</span><span class="o">(</span><span class="k">new</span> <span class="nc">Integer</span><span class="o">(</span><span class="mi">0</span><span class="o">));</span> <span class="c1">// class java.lang.Integer</span>
+        <span class="n">getType</span><span class="o">(</span><span class="k">new</span> <span class="nc">String</span><span class="o">());</span> <span class="c1">// class java.lang.String</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nc">String</span> <span class="nf">getType</span><span class="o">(</span><span class="no">T</span> <span class="n">arg</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">String</span> <span class="n">clazz</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
+        <span class="k">return</span> <span class="n">clazz</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="타입-제한">타입 제한</h2>
+
+<p>제네릭 변수의 데이터 타입을 특정 서브타입으로 제한하는 기능이다. <code class="language-plaintext highlighter-rouge">extends</code> 키워드와 함께 슈퍼타입을 명시하는 방식으로 사용한다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;T extends ParentType&gt;
+</code></pre></div></div>
+
+<p>예를 들어, 아래 작성한 <code class="language-plaintext highlighter-rouge">CustomGeneric에서</code> 제네릭 변수의 데이터 타입은 반드시 <code class="language-plaintext highlighter-rouge">java.math.BigDecimal</code>의 서브타입이어야 한다:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GenericClassTest</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">CustomGeneric</span><span class="o">&lt;</span><span class="nc">BigDecimal</span><span class="o">&gt;</span> <span class="n">gen</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CustomGeneric</span><span class="o">&lt;&gt;();</span> <span class="c1">// correct</span>
+        <span class="nc">CustomGeneric</span><span class="o">&lt;</span><span class="nc">LittleDecimal</span><span class="o">&gt;</span> <span class="n">gen2</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CustomGeneric</span><span class="o">&lt;&gt;();</span> <span class="c1">// correct</span>
+        <span class="nc">CustomGeneric</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">gen3</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CustomGeneric</span><span class="o">&lt;&gt;();</span> <span class="c1">// wrong</span>
+        <span class="c1">// Bound mismatch: The type Integer is not a valid substitute for the bounded parameter &lt;T extends BigDecimal&gt; of the type CustomGeneric&lt;T&gt;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">class</span> <span class="nc">CustomGeneric</span><span class="o">&lt;</span><span class="no">T</span> <span class="kd">extends</span> <span class="nc">BigDecimal</span><span class="o">&gt;</span> <span class="o">{</span>
+        <span class="c1">// T는 BigDecimal의 자식 클래스만 올 수 있음</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">class</span> <span class="nc">LittleDecimal</span> <span class="kd">extends</span> <span class="nc">BigDecimal</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">long</span> <span class="n">serialVersionUID</span> <span class="o">=</span> <span class="mi">2718457985045593298L</span><span class="o">;</span>
+        <span class="kd">public</span> <span class="nf">LittleDecimal</span><span class="o">(</span><span class="kt">int</span> <span class="n">val</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kd">super</span><span class="o">(</span><span class="n">val</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GenericMethodTest</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">CustomGeneric</span> <span class="n">gen</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CustomGeneric</span><span class="o">();</span>
+        <span class="n">gen</span><span class="o">.</span><span class="na">getSome</span><span class="o">(</span><span class="k">new</span> <span class="nc">LittleDecimal</span><span class="o">(</span><span class="mi">123</span><span class="o">));</span> <span class="c1">// correct</span>
+        <span class="n">gen</span><span class="o">.</span><span class="na">getSome</span><span class="o">(</span><span class="s">"123"</span><span class="o">);</span> <span class="c1">// wrong</span>
+        <span class="c1">// The method getSome(T) in the type GenericMethodTest.CustomGeneric is not applicable for the arguments (String)</span>
+        <span class="n">gen</span><span class="o">.</span><span class="na">getSome</span><span class="o">(</span><span class="mi">123</span><span class="o">);</span> <span class="c1">// wrong</span>
+        <span class="c1">// The method getSome(T) in the type GenericMethodTest.CustomGeneric is not applicable for the arguments (int)</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">class</span> <span class="nc">CustomGeneric</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="o">&lt;</span><span class="no">T</span> <span class="kd">extends</span> <span class="nc">BigDecimal</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="nf">getSome</span><span class="o">(</span><span class="no">T</span> <span class="n">number</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">number</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">class</span> <span class="nc">LittleDecimal</span> <span class="kd">extends</span> <span class="nc">BigDecimal</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">long</span> <span class="n">serialVersionUID</span> <span class="o">=</span> <span class="mi">2718457985045593298L</span><span class="o">;</span>
+        <span class="kd">public</span> <span class="nf">LittleDecimal</span><span class="o">(</span><span class="kt">int</span> <span class="n">val</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kd">super</span><span class="o">(</span><span class="n">val</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

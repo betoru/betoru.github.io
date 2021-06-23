@@ -1,0 +1,126 @@
+I"m2<ul class="toc" id="markdown-toc">
+  <li><a href="#arguments란" id="markdown-toc-arguments란">arguments란?</a></li>
+  <li><a href="#example-1" id="markdown-toc-example-1">example 1</a></li>
+  <li><a href="#example-2" id="markdown-toc-example-2">example 2</a></li>
+  <li><a href="#main-메서드의-arguments" id="markdown-toc-main-메서드의-arguments">main 메서드의 arguments</a></li>
+</ul>
+
+<h2 id="arguments란">arguments란?</h2>
+
+<p>가변인자 <code class="language-plaintext highlighter-rouge">arguments</code>는 메서드 매개 변수의 특수한 형태로, 배열처럼 다뤄지며 배열의 길이를 메서드 호출 시점에 결정한다. 사용하려면 변수 타입 뒤에 바로 온점 세 개<code class="language-plaintext highlighter-rouge">...</code>를 붙이면 된다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 선언</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">showArgs</span><span class="o">(</span><span class="kt">int</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">1</span><span class="o">]);</span>
+<span class="o">}</span>
+
+
+<span class="c1">// 호출 패턴</span>
+<span class="n">showArgs</span><span class="o">();</span>
+<span class="n">showArgs</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+<span class="n">showArgs</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">);</span>
+<span class="n">showArgs</span><span class="o">(</span><span class="mi">3</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p>호출하는 측에선 인자를 생략하거나, 타입이 일치하는(여기선 int) 쉼표로 구분되는 하나 이상의 인자를 전달하며 호출할 수 있다. 인자를 생략할 경우 가변인자의 길이는 0이 되니 주의할 것.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kt">void</span> <span class="nf">showArgs</span><span class="o">(</span><span class="kt">int</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">args</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+        <span class="c1">// 전달받은 인수의 개수만큼 배열의 길이가 결정되므로 그 만큼만 반복</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>향상된 포문을 활용할 경우 다음과 같다:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kt">void</span> <span class="nf">showArgs</span><span class="o">(</span><span class="kt">int</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">ns</span> <span class="o">:</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">ns</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="example-1">example 1</h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Args</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">multiply</span><span class="o">(</span><span class="kt">int</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">result</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">ns</span> <span class="o">:</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">result</span> <span class="o">*</span> <span class="n">ns</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+
+<span class="nc">Args</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Args</span><span class="o">();</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">multiply</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">2</span><span class="o">));</span>
+<span class="err">→</span> <span class="mi">16</span>
+</code></pre></div></div>
+
+<h2 id="example-2">example 2</h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">m1</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span> <span class="c1">// 6</span>
+    <span class="n">m1</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]</span> <span class="o">{</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span> <span class="o">});</span> <span class="c1">// 10</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">m1</span><span class="o">(</span><span class="kt">int</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">args</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+        <span class="n">sum</span> <span class="o">+=</span> <span class="n">args</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">sum</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="main-메서드의-arguments">main 메서드의 arguments</h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span>
+</code></pre></div></div>
+
+<p>콘솔에서 값을 입력받아 main 메서드에 매게변수로 전달할 때 사용된다.</p>
+
+<p>다음과 같은 클래스가 있을 때:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainTest</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"args.length : "</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">args</span><span class="o">.</span><span class="na">length</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Incorrect usage"</span><span class="o">);</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">args</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"args["</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="s">"] = \""</span><span class="o">+</span> <span class="n">args</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">+</span> <span class="s">"\""</span><span class="o">);</span>
+        <span class="o">}</span>        
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>터미널에서 직접 실행해보면:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>javac MainTest.java
+
+java MainTest
+Incorrect usage
+
+java MainTest a 1 b c 3 4 d f
+args length : 8
+args[0] <span class="o">=</span> <span class="s2">"a"</span>
+args[1] <span class="o">=</span> <span class="s2">"1"</span>
+args[2] <span class="o">=</span> <span class="s2">"b"</span>
+args[3] <span class="o">=</span> <span class="s2">"c"</span>
+args[4] <span class="o">=</span> <span class="s2">"3"</span>
+args[5] <span class="o">=</span> <span class="s2">"4"</span>
+args[6] <span class="o">=</span> <span class="s2">"d"</span>
+args[7] <span class="o">=</span> <span class="s2">"f"</span>
+</code></pre></div></div>
+
+<p>요렇게 된다.</p>
+
+<p>끗.</p>
+:ET
