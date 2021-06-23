@@ -1,14 +1,14 @@
 ---
 layout: post
 date: 2021-06-23 16:40:00 +0900
-title: 'Java: yml VS properties'
+title: 'YAML VS PROPERTIES'
 category:
   - java
 tags:
   - java
   - yml
   - properties
-img: java.png # Add image post (optional)  
+img: java.png # Add image post (optional)
 ---
 
 * YAML VS PROPERTIES
