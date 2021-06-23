@@ -1,0 +1,13 @@
+---
+layout: post
+title: 주저리
+date: 2021-06-23 12:49:00 +0300
+description: 일상 얘기 # Add post description (optional)
+img: software.jpg # Add image post (optional)
+category: 'Welcome'
+tags: [Productivity, Software] # add tag
+---
+
+### Daily
+
+일상얘기
