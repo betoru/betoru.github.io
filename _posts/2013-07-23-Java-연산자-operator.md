@@ -7,7 +7,7 @@ category:
 tags:
   - java
   - operator
-img: java4.png # Add image post (optional)  
+img: java.png # Add image post (optional)  
 ---
 
 * Kramdown table of contents
