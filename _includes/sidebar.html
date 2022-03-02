@@ -24,7 +24,6 @@
       <div class="sidebar-nav-item">Category</div>
       <!-- <nav class="content-ul"> -->
       {% assign sorted_cates = site.categories | sort %}
-<!--        {% for category in site.categories %}-->
         {% for category in sorted_cates %}
         <!-- <a href="{{ root_url }}/category#{{ category | first }}" onclick="location.hash='{{ category | first }}';location.reload()" -->
         <a href="/category#{{ category[0] }}" onclick="location.hash='{{ category[0] }}';location.reload()"
