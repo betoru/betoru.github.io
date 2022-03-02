@@ -1,14 +1,16 @@
 ---
 layout: post
 date: 2021-06-23 16:40:00 +0900
-title: 'YAML VS PROPERTIES'
+title: 'Spring: YAML VS PROPERTIES'
 category:
-  - java
+  - spring
 tags:
+  - spring
+  - springboot
   - java
   - yml
   - properties
-img: java.png # Add image post (optional)
+img: spring.png # Add image post (optional)
 ---
 
 * YAML VS PROPERTIES
@@ -43,5 +45,5 @@ spring :
 #PROPERTIES
 server.port=8002
 spring.mvc.view.prefix=/WEB-INF/view/
-spring.mvc.view.prefix=.jsp
+spring.mvc.view.suffix=.jsp
 ```
