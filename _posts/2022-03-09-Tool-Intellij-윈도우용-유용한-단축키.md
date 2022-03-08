@@ -8,7 +8,7 @@ tags:
   - tools
   - intellij
   - 단축키
-img: devtool.jpg # Add image post (optional)
+img: devtool.png # Add image post (optional)
 ---
 
 * Kramdown table of contents
