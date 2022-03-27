@@ -1,7 +1,7 @@
 ---
 layout: post
 date: 2022-03-09 00:06:00 +0900
-title: 'Tools: (Intellij)윈도우 유용한 단축키'
+title: 'Intellij: 윈도우 유용한 단축키'
 category:
   - tools
 tags:
