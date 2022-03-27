@@ -2,8 +2,10 @@
 layout: post
 date: 2018-03-20 16:08:35 +0900
 title: 'JavaScript: 래퍼 객체 wrapper objects'
-category: 'javascript'
+category: 
+  - script language
 tags:
+  - script language
   - ecmascript
   - javascript
   - wrapper

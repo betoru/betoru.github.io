@@ -3,8 +3,9 @@ layout: post
 date: 2021-06-23 16:40:00 +0900
 title: 'Spring: YAML VS PROPERTIES'
 category:
-  - spring
+  - framework
 tags:
+  - framework
   - spring
   - springboot
   - java

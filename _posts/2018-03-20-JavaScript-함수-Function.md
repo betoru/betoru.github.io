@@ -3,8 +3,9 @@ layout: post
 date: 2018-03-20 15:59:09 +0900
 title: 'JavaScript: 함수 Function'
 category:
-  - javascript
+  - script language
 tags:
+  - script language
   - ecmascript
   - javascript
   - function

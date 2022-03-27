@@ -3,8 +3,9 @@ layout: post
 date: 2013-07-23 03:42:00 +0900
 title: 'Java: 비정형 인자 arguments'
 category:
-  - java
+  - program language
 tags:
+  - program language
   - java
   - arguments
 img: java.png # Add image post (optional)

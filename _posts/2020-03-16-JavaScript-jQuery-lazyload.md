@@ -3,8 +3,9 @@ layout: post
 date: 2020-03-16 16:59:00 +0900
 title: 'JavaScript: jQuery lazyload()'
 category:
-  - javascript
+  - script language
 tags:
+  - script language
   - javascript
   - image
   - lazy

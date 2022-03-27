@@ -3,8 +3,9 @@ layout: post
 date: 2020-05-07 13:25:00 +0900
 title: 'Android: Kotlin Splash'
 category:
-  - Kotlin
+  - program language
 tags:
+  - program language
   - Kotlin
   - android
   - splash

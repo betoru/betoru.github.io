@@ -3,8 +3,9 @@ layout: post
 date: 2018-03-20 16:15:11 +0900
 title: 'JavaScript: 타입 변환 type conversion'
 category:
-  - javascript
+  - script language
 tags:
+  - script language
   - ecmascript
   - javascript
   - type

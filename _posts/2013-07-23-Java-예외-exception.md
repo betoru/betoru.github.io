@@ -3,8 +3,9 @@ layout: post
 date: 2013-07-23 21:38:00 +0900
 title: 'Java: 예외 exception'
 category:
-  - java
+  - program language
 tags:
+  - program language
   - java
   - exception
   - try-catch

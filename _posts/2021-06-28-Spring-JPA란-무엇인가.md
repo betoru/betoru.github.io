@@ -3,9 +3,11 @@ layout: post
 date: 2021-06-28 11:40:00 +0900
 title: 'Spring: JPA란 무엇인가?'
 category:
-  - spring
+  - framework
 tags:
-  - springframework
+  - framework
+  - spring
+  - springboot
   - jpa
   - hibernate
 img: spring.png

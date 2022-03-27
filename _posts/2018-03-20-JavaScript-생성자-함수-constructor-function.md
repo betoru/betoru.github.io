@@ -3,8 +3,9 @@ layout: post
 date: 2018-03-20 17:19:12 +0900
 title: 'JavaScript: 생성자 함수 constructor function'
 category:
-  - javascript
+  - script language
 tags:
+  - script language
   - ecmascript
   - javascript
   - constructor

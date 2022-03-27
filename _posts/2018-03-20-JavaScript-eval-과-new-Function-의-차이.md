@@ -3,8 +3,9 @@ layout: post
 date: 2018-03-20 16:58:02 +0900
 title: 'JavaScript: eval()과 new Function()의 차이'
 category:
-  - javascript
+  - script language
 tags:
+  - script language
   - ecmascript
   - javascript
   - eval

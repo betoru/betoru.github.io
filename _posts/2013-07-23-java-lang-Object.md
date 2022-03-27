@@ -3,8 +3,9 @@ layout: post
 date: 2013-07-23 12:59:00 +0900
 title: 'Java: java.lang.Object'
 category:
-  - java
+  - program language
 tags:
+  - program language
   - java
   - object
 img: java.png # Add image post (optional)  

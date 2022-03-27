@@ -3,8 +3,9 @@ layout: post
 date: 2018-03-20 14:57:36 +0900
 title: 'JavaScript: 연산자 operator'
 category:
-  - javascript
+  - script language
 tags:
+  - script language
   - ecmascript
   - javascript
   - operator

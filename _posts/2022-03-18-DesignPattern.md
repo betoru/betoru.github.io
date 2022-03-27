@@ -3,8 +3,10 @@ layout: post
 date: 2022-03-18 15:17:00 +0900
 title: '(todo)DesignPattern: 디자인패턴이란?'
 category:
-  - design pattern
+  - reading
 tags:
+  - reding
+  - book
   - design pattern
   - GOF
   - 디자인패턴

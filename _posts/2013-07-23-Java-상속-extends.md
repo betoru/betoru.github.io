@@ -3,8 +3,9 @@ layout: post
 date: 2013-07-23 21:00:00 +0900
 title: 'Java: 상속 extends'
 category:
-  - java
+  - program language
 tags:
+  - program language
   - java
   - extends
 img: java.png # Add image post (optional)  

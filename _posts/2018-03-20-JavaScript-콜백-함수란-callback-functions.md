@@ -3,8 +3,9 @@ layout: post
 date: 2018-03-20 16:54:14 +0900
 title: 'JavaScript: 콜백 함수란 callback functions'
 category:
-  - javascript
+  - script language
 tags:
+  - script language
   - ecmascript
   - javascript
   - callback
