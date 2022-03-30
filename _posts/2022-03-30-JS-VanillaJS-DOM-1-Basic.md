@@ -223,12 +223,9 @@ console.log(ar[4].math); //배열 내 객체 출력
 #### Json의 중첩표현
 ```javascript
 //Json은 중첩된 데이터의 구조도 쉽게 표현 가능
-var notices = [
-    {"id":1, "title":"hello1"},
-    {"id":2, "title":"hello2"},
-    {"id":3, "title":"hello3"}
-];
-
+var notices = [{"id":1, "title":"hello1"},
+                {"id":2, "title":"hello2"},
+                {"id":3, "title":"hello3"}];
 //두번째 객체 데이터 호출 EZ
 console.log(notices[1].title);
 
