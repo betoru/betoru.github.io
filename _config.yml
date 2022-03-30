@@ -13,15 +13,14 @@ site-twitter: #if your site has a twitter account, enter it here
 # Author Settings
 author: Betoru's Dev Galaxy # add your name
 author-img: main_image.gif # add your photo
-# about-author: Hi :D Bye !
-I'm a web developer focusing on back-end development.
+about-author: I'm a web developer focusing on back-end development.
   In the future, I want to be a full-stack developer and just a good developer. 
   Always hungry to keep learning. # add description
 #social-twitter: # add your Twitter handle
 #social-facebook: # add your Facebook handle
 social-github: betoru # add your Github handle
 #social-linkedin: # add your Linkedin handle
-social-email: betoru@naver.com # add your Email address
+social-email: betoru0827@naver.com # add your Email address
 
 # Disqus
 discus-identifier: mr-brown # add your discus identifier
