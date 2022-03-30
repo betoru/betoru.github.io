@@ -220,9 +220,10 @@ console.log(ar[4].math); //배열 내 객체 출력
 - xml     : 태그형식
 - csv     : 콤마 구분법
 - json    : 아래 설명
+
 #### Json의 중첩표현
 ```javascript
-//Json은 중첩된 데이터의 구조도 쉽게 표현 가능
+//json은 중첩된 데이터의 구조도 쉽게 표현 가능
 var notices = [{"id":1, "title":"hello1"},
                 {"id":2, "title":"hello2"},
                 {"id":3, "title":"hello3"}];
