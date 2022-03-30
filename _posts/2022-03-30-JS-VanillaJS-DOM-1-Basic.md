@@ -183,9 +183,9 @@ console.log(exam.key);  //undefined
  */
 ```
 #### 데이터객체와 JSON 생성 방법
-    Javascript Obejct
 ```javascript
 /*
+    Javascript Obejct
     앞서 언급한 것처럼 자바스크립트는 변수를 선언하고 값을 '대입'하는 것이 아니라
     아래와 같이 wrapper class를 선언하여 참조하도록 되어있다.
     하지만 이런 불편한 방식은 사용자에게 매력적이지 않다.
@@ -275,5 +275,5 @@ var json = JSON.stringify(data2);
 console.log(json);
 ```
 
-#### 참고사항
+### 참고사항
 - [eval은 evil](https://velog.io/@modolee/javascript-eval-is-evil)
