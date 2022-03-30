@@ -217,9 +217,9 @@ console.log(ar[5][1]); //배열 내 배열 출력
 console.log(ar[4].math); //배열 내 객체 출력
 ```
 #### 데이터를 구분하기 위한 표현법
-    xml     : 태그형식
-    csv     : 콤마 구분법
-    json    : 아래 설명
+- xml     : 태그형식
+- csv     : 콤마 구분법
+- json    : 아래 설명
 #### Json의 중첩표현
 ```javascript
 //Json은 중첩된 데이터의 구조도 쉽게 표현 가능
