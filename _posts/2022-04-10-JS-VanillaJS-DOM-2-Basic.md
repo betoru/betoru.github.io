@@ -1,7 +1,7 @@
 ---
 layout: post
 date: 2022-04-10 22:17:00 +0900
-title: 'JavaScript: VanillaJs-DOM-#2-Basic'
+title: 'JavaScript: VanillaJs-DOM-#2-foreach'
 category:
   - script language
 tags:
