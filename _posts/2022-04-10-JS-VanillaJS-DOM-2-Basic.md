@@ -65,6 +65,7 @@ img: js-1.png # Add image post (optional)
 forEach()를 호출한 배열.  
 `thisArg Optional`  
 callback을 실행할 때 this로 사용할 값.
+
 ```javascript
 
         //배열 데이터의 일반적인 반복문
