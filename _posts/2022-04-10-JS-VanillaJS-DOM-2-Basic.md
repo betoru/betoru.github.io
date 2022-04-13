@@ -52,8 +52,11 @@ img: js-1.png # Add image post (optional)
         document.write("3"+"2");
 ```
 
-#### 반복문
-##### foreach
+#### 제어구조
+> 조건문 : if, while, do-while  
+> 반복문 : while, for, for-in  
+> 선택문 : else, else if, switch
+##### 반복문 : foreach
 >arr.forEach(callback(currentvalue[, index[, array]])[, thisArg])  
 `callback`  
 각 요소에 대해 실행할 함수. 다음 세 가지 매개변수를 받습니다.  
@@ -130,7 +133,7 @@ callback을 실행할 때 this로 사용할 값.
         > "c10"
 
 ```
-##### for-in
+##### 반복문 : for-in
 ```javascript
         /**
          * for-in
