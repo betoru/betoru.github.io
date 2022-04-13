@@ -8,7 +8,7 @@ tags:
   - script language
   - javascript
   - vanillaJS
-  - dom
+  - function
   - json
 img: js-1.png # Add image post (optional)  
 ---
