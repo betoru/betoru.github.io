@@ -1,14 +1,13 @@
 ---
 layout: post
-date: 2022-05-08 14:40:00 +0900
-title: 'Spring: 스프링부트 입문기'
+date: 2021-06-28 11:40:00 +0900
+title: 'Spring: JPA란 무엇인가?'
 category:
-  - framework
+    - framework
 tags:
-  - framework
-  - spring
-  - springboot
-  - hibernate
+    - framework
+    - spring
+    - springboot
 img: spring.png
 ---
 
