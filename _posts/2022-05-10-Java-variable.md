@@ -1,6 +1,6 @@
 ---
 layout: post
-date: 2022-05-10 22:13:00 +0900
+date: 2022-05-10 22:12:00 +0900
 title: 'Java: Variable&Method'
 category:
   - program language
