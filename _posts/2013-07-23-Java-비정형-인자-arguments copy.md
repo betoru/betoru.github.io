@@ -1,0 +1,31 @@
+---
+layout: post
+date: 2022-08-10 23:437:00 +0900
+title: "Memo: 정리할 것들"
+category:
+  - writing
+tags:
+  - memo
+img: memo.png # Add image post (optional)
+---
+
+- Kramdown table of contents
+  {:toc .toc}
+
+### thymeleaf
+
+model에 `data` key로 담아 타임리프 뷰 템플릿이 렌더링될 때
+아래 태그는 `empty`를 `data`에 바인딩된 값 `hello!`로 치환한다.😂
+
+```thymeleaf
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<p th:text="${data}">empty</p>
+</body>
+</html>
+```
