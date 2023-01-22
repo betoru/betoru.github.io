@@ -15,7 +15,7 @@ img: js-1.png # Add image post (optional)
 * Kramdown table of contents
 {:toc .toc}
 
-#### 참고한 글
+### 참고한 글
 - [https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference)
 - [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference)
 - [http://www.w3schools.com/jsref/jsref_obj_global.asp](http://www.w3schools.com/jsref/jsref_obj_global.asp)
